@@ -31,11 +31,11 @@ if(empty($nom)){ $_SESSION['mensaje1']="Debe indicar el nombre del Plan Maestro"
 } else { // si validar 
 
 $sql="update planmaes set nombre='$nom', estatus='$est', id_responsable=$res, id_modelo=$mod, id_tipo_sensor=$sensor, id_unidad_medida=$unidmed, porc_tol=$porc, valor_prom=$prom, id_provserv=$proveedor where id_planmaes = ".$_SESSION['master']['id'];
-	$rs = pg_query($sql);
+	$rs = pg_query($link,$sql);
 	if($rs){ 
 		Auditoria("Actualizo Plan Maestro de Mantenimiento: $nom",$_SESSION['master']);
 		
-		$rs = pg_query("select id_planmant, valor, tiempo from planmant where id_planmaes = ".$_SESSION['master']['id']);
+		$rs = pg_query($link,"select id_planmant, valor, tiempo from planmant where id_planmaes = ".$_SESSION['master']['id']);
 		while($r = pg_fetch_array($rs)){ 
 
 $dif = ($r[1]/100)*$porc;
@@ -46,9 +46,9 @@ $tiempo_max = $r[2]+$dif;
 $tiempo_min = $r[2]-$dif;
 
 if($proveedor == 0){ 
-	pg_query("update planmant set id_modelo=$mod, id_responsable=$res, id_tipo_sensor=$sensor, id_unidad_medida=$unidmed, porc_tol=$porc, valor_prom=$prom, valor_min = $val_min, valor_max = $val_max, tiempo_min = $tiempo_min, tiempo_max = $tiempo_max where id_planmant = ".$r[0]);
+	pg_query($link,"update planmant set id_modelo=$mod, id_responsable=$res, id_tipo_sensor=$sensor, id_unidad_medida=$unidmed, porc_tol=$porc, valor_prom=$prom, valor_min = $val_min, valor_max = $val_max, tiempo_min = $tiempo_min, tiempo_max = $tiempo_max where id_planmant = ".$r[0]);
 } else { 
-	pg_query("update planmant set id_modelo=$mod, id_responsable=$res, id_tipo_sensor=$sensor, id_unidad_medida=$unidmed, porc_tol=$porc, valor_prom=$prom, valor_min = $val_min, valor_max = $val_max, tiempo_min = $tiempo_min, tiempo_max = $tiempo_max, id_provserv = $proveedor where id_planmant = ".$r[0]);
+	pg_query($link,"update planmant set id_modelo=$mod, id_responsable=$res, id_tipo_sensor=$sensor, id_unidad_medida=$unidmed, porc_tol=$porc, valor_prom=$prom, valor_min = $val_min, valor_max = $val_max, tiempo_min = $tiempo_min, tiempo_max = $tiempo_max, id_provserv = $proveedor where id_planmant = ".$r[0]);
 }
 			
 			
@@ -65,7 +65,7 @@ if($proveedor == 0){
 } // si validar
 
 } else if(isset($_SESSION['master'])){
-$rs = pg_query("select * from planmaes where id_planmaes = ".$_SESSION['master']['id']);
+$rs = pg_query($link,"select * from planmaes where id_planmaes = ".$_SESSION['master']['id']);
 $rs = pg_fetch_array($rs);
 $nom = $rs[1]; 
 $est = $rs[2]; 
@@ -150,12 +150,12 @@ if(isset($_SESSION['ptc'])){ ?>
 <input id="nom" name="nom" type="text" placeholder="Nombre del Planes Maestro de Mantenimiento" class="form-control" maxlength="120" value="<?php echo $nom;?>" onkeypress="return permite(event,'todo')" onkeyup="mayu(this)" /></div>
 
 <?php $cli = "";
-$rs = pg_query("select rif, razon_social from clientes where id_cliente = ".$_SESSION['master']['cli']); $rs = pg_fetch_array($rs); $cli = $rs[0]." ".$rs[1]; ?>
+$rs = pg_query($link,"select rif, razon_social from clientes where id_cliente = ".$_SESSION['master']['cli']); $rs = pg_fetch_array($rs); $cli = $rs[0]." ".$rs[1]; ?>
 <div class="form-group"><label>Cliente</label>
 <input id="cli" name="cli" type="text" placeholder="Cliente" class="form-control" value="<?php echo $cli;?>" readonly="readonly" /></div>
 
 <div class="form-group"><label>Tipo de Unidad</label>
-<div><?php $rs = pg_query("select id_confunid, codigo_principal from confunid where id_confunid = ".$_SESSION['master']['conf']." order by nombre asc "); $r = pg_fetch_array($rs); ?><input id="conf" name="conf" type="text" placeholder="Tipo de Unidad" class="form-control" value="<?php echo $r[1];?>" readonly="readonly" /> 
+<div><?php $rs = pg_query($link,"select id_confunid, codigo_principal from confunid where id_confunid = ".$_SESSION['master']['conf']." order by nombre asc "); $r = pg_fetch_array($rs); ?><input id="conf" name="conf" type="text" placeholder="Tipo de Unidad" class="form-control" value="<?php echo $r[1];?>" readonly="readonly" /> 
 </div>
 </div>
 
@@ -163,7 +163,7 @@ $rs = pg_query("select rif, razon_social from clientes where id_cliente = ".$_SE
 <div class="form-group"><label>Marca - Modelo</label>
 <div><select id="mod" name="mod" class="selectpicker">
 <option value="0" selected="selected">Seleccione un Modelo</option>
-<?php $rs=pg_query("select id_modelo, marcas.descripcion, modelos.descripcion from      marcas, modelos where modelos.id_marca = marcas.id_marca and id_cliente = ".$_SESSION['master']['cli']." order by marcas.descripcion, modelos.descripcion asc ");
+<?php $rs=pg_query($link,"select id_modelo, marcas.descripcion, modelos.descripcion from      marcas, modelos where modelos.id_marca = marcas.id_marca and id_cliente = ".$_SESSION['master']['cli']." order by marcas.descripcion, modelos.descripcion asc ");
 $r = pg_num_rows($rs);
 if($r!=false && $r>0){ while($r = pg_fetch_array($rs)){?>    
 <option value="<?php echo $r[0];?>" <?php if($mod==$r[0]) echo "selected";?> ><?php echo $r[1]." - ".$r[2];?></option> 
@@ -175,7 +175,7 @@ if($r!=false && $r>0){ while($r = pg_fetch_array($rs)){?>
 <div class="form-group"><label>Tipo de Sensor</label>
 <div><select id="sensor" name="sensor" class="selectpicker" onchange="bloquear();">
 <option value="0" selected="selected">Seleccione un Tipo de Sensor</option>
-<?php $rs=pg_query("select id_tipo_sensor, descripcion, unidmed.id_unidmed, magnitudes.nombre, unidmed.nombre from tipo_sensores, magnitudes, unidmed  
+<?php $rs=pg_query($link,"select id_tipo_sensor, descripcion, unidmed.id_unidmed, magnitudes.nombre, unidmed.nombre from tipo_sensores, magnitudes, unidmed  
 where  tipo_sensores.id_unidmed = unidmed.id_unidmed and
 magnitudes.id_magnitud = unidmed.id_magnitud 
 order by descripcion asc ");
@@ -199,7 +199,7 @@ if($r!=false && $r>0){ while($r = pg_fetch_array($rs)){ ?>
 <div class="form-group"><label>Responsable</label>
 <div><select id="res" name="res" class="selectpicker">
 <option value="0" selected="selected">Seleccione un Responsable</option>
-<?php $rs = pg_query("select id_personal, ci, nombre from personal where id_cliente = ".$_SESSION['master']['cli']." order by ci asc "); 
+<?php $rs = pg_query($link,"select id_personal, ci, nombre from personal where id_cliente = ".$_SESSION['master']['cli']." order by ci asc "); 
 $r = pg_num_rows($rs);
 if($r!=false && $r>0){ while($r = pg_fetch_array($rs)){?>    
 <option value="<?php echo $r[0];?>" <?php if($res==$r[0]) echo "selected";?> ><?php echo $r[1]." ".$r[2];?></option> 
@@ -209,7 +209,7 @@ if($r!=false && $r>0){ while($r = pg_fetch_array($rs)){?>
 <div class="form-group"><label>Proveedor de Servicios</label>
 <div><select id="prov" name="prov" class="selectpicker">
 <option value="0" selected="selected">Seleccione un Proveedor de Servicio</option>
-<?php $rs = pg_query("select id_provserv, rif, nombre_prov from provserv where id_cliente = ".$_SESSION['master']['cli']." order by rif asc "); 
+<?php $rs = pg_query($link,"select id_provserv, rif, nombre_prov from provserv where id_cliente = ".$_SESSION['master']['cli']." order by rif asc "); 
 $r = pg_num_rows($rs);
 if($r!=false && $r>0){ while($r = pg_fetch_array($rs)){?>    
 <option value="<?php echo $r[0];?>" <?php if($proveedor==$r[0]) echo "selected";?> ><?php echo $r[1]." ".$r[2];?></option> 
