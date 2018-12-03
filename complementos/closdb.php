@@ -1,0 +1,1 @@
+<?php pg_close($link); unset($link);?>

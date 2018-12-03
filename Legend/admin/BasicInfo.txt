@@ -1,0 +1,446 @@
+Scripts Links and more:
+			3dbuttons
+			assets/3dbuttons
+			assets/3dbuttons/Documentaion.txt
+			http://www.flashuser.net/css3-social-media-button
+			
+			acknowledgeinputs
+			assets/acknowledgeinputs
+			assets/acknowledgeinputs/Documentaion.txt
+			https://github.com/AverageMarcus/Bootstrap-AcknowledgeInputs
+			
+			autosize
+			assets/autosize
+			assets/autosize/Documentaion.txt
+			http://www.jacklmoore.com/autosize
+			
+			backstretch
+			assets/backstretch
+			assets/backstretch/Documentaion.txt
+			https://github.com/srobbin/jquery-backstretch
+			
+			biccalendar
+			assets/biccalendar
+			assets/biccalendar/Documentaion.txt
+			https://github.com/bichotll/bic_calendar
+			
+			blueimp
+			assets/blueimp
+			assets/blueimp/Documentaion.txt
+			https://github.com/blueimp/Gallery
+
+			bootstrapalerts
+			assets/bootstrapalerts
+			assets/bootstrapalerts/Documentaion.txt
+			https://github.com/eltimn/jquery-bs-alerts
+			
+			bootstrapdatatables
+			assets/bootstrapdatatables
+			assets/bootstrapdatatables/Documentaion.txt
+			http://datatables.net/blog/Twitter_Bootstrap_2
+			
+			bootstrapfilestyle
+			assets/bootstrapfilestyle
+			assets/bootstrapfilestyle/Documentaion.txt
+			http://dev.tudosobreweb.com.br/bootstrap-filestyle/
+			
+			bootstrapmaxlength
+			assets/bootstrapmaxlength
+			assets/bootstrapmaxlength/Documentaion.txt
+			https://github.com/mimo84/bootstrap-maxlength/
+			
+			bootstrapmodal
+			assets/bootstrapmodal
+			assets/bootstrapmodal/Documentaion.txt
+			https://github.com/jschr/bootstrap-modal/
+			
+			bootstrapmultiselect
+			assets/bootstrapmultiselect
+			assets/bootstrapmultiselect/Documentaion.txt
+			https://github.com/davidstutz/bootstrap-multiselect
+			
+			bootstrapselect
+			assets/bootstrapselect
+			assets/bootstrapselect/Documentaion.txt
+			http://silviomoreto.github.io/bootstrap-select/
+			
+			bootstrapswitch
+			assets/bootstrapswitch
+			assets/bootstrapswitch/Documentaion.txt
+			http://www.larentis.eu/switch/
+			
+			bootstraptokenfield
+			assets/bootstraptokenfield
+			assets/bootstraptokenfield/Documentaion.txt
+			https://github.com/sliptree/bootstrap-tokenfield
+			
+			bootstrapui
+			assets/bootstrapui
+			assets/bootstrapui/Documentaion.txt
+			http://addyosmani.github.com/jquery-ui-bootstrap
+			
+			boxer
+			assets/boxer
+			assets/boxer/Documentaion.txt
+			https://github.com/benplum/Boxer
+			
+			chosen
+			assets/chosen
+			assets/chosen/Documentaion.txt
+			https://github.com/harvesthq/chosen
+			
+			clockface
+			assets/clockface
+			assets/clockface/Documentaion.txt
+			http://github.com/vitalets/clockface
+			
+			colorpalette
+			assets/colorpalette
+			assets/colorpalette/Documentaion.txt
+			https://github.com/extremeFE/bootstrap-colorpalette
+			
+			colorpicker
+			assets/colorpicker
+			assets/colorpicker/Documentaion.txt
+			http://mjaalnir.github.io/bootstrap-colorpicker/
+			
+			colorpickersliders
+			assets/colorpickersliders
+			assets/colorpickersliders/Documentaion.txt
+			https://github.com/istvan-meszaros/css-colorpickersliders
+			
+			counter
+			assets/counter
+			assets/counter/Documentaion.txt
+			https://github.com/sonnyt/downCount
+			
+			creativebuttons
+			assets/creativebuttons
+			assets/creativebuttons/Documentaion.txt
+			http://tympanus.net/codrops/2013/06/13/creative-button-styles/
+			
+			daterangepicker
+			assets/daterangepicker
+			assets/daterangepicker/Documentaion.txt
+			https://github.com/dangrossman/bootstrap-daterangepicker
+			
+			datetimepicker
+			assets/datetimepicker
+			assets/datetimepicker/Documentaion.txt
+			http://www.malot.fr/bootstrap-datetimepicker
+			
+			dropzone
+			assets/dropzone
+			assets/dropzone/Documentaion.txt
+			https://github.com/enyo/dropzone
+			
+			easypiechart
+			assets/easypiechart
+			assets/easypiechart/Documentaion.txt
+			https://github.com/rendro/easy-pie-chart
+			
+			fdslider
+			assets/fdslider
+			assets/fdslider/Documentaion.txt
+			https://github.com/freqdec/fd-slider
+			
+			flot
+			assets/flot
+			assets/flot/Documentaion.txt
+			https://github.com/flot/flot
+			
+			fontawesome
+			assets/fontawesome
+			assets/3dbuttons/Documentaion.txt
+			http://fontawesome.io
+			
+			fseditor
+			assets/fseditor
+			assets/fseditor/Documentaion.txt
+			http://github.com/burakson/fseditor
+			
+			fuelux
+			assets/fuelux
+			assets/fuelux/Documentaion.txt
+			https://github.com/ExactTarget/fuelux
+			
+			fullcalendar
+			assets/fullcalendar
+			assets/fullcalendar/Documentaion.txt
+			http://arshaw.com/fullcalendar/
+			
+			gmaps
+			assets/gmaps
+			assets/gmaps/Documentaion.txt
+			https://github.com/hpneo/gmaps
+			
+			happy
+			assets/happy
+			assets/happy/Documentaion.txt
+			https://github.com/andyet/Happy.js
+			
+			humane
+			assets/humane
+			assets/humane/Documentaion.txt
+			https://github.com/wavded/humane-js
+			
+			icheck
+			assets/icheck
+			assets/icheck/Documentaion.txt
+			https://github.com/fronteed/iCheck
+			
+			ionsound
+			assets/ionsound
+			assets/ionsound/Documentaion.txt
+			https://github.com/IonDen/ion.sound
+			
+			jasnyfileupload
+			assets/jasnyfileupload
+			assets/jasnyfileupload/Documentaion.txt
+			https://github.com/jasny/bootstrap/
+			
+			jqaddresspicker
+			assets/jqaddresspicker
+			assets/jqaddresspicker/Documentaion.txt
+			https://github.com/elmariachi111/jquery-addresspicker
+			
+			jqgridbootstrap
+			assets/jqgridbootstrap
+			assets/jqgridbootstrap/Documentaion.txt
+			https://github.com/tonytomov/jqGrid
+			
+			jqnestable
+			assets/jqnestable
+			assets/jqnestable/Documentaion.txt
+			https://github.com/dbushell/Nestable
+			
+			jqrangeslider
+			assets/jqrangeslider
+			assets/jqrangeslider/Documentaion.txt
+			https://github.com/ghusse/jQRangeSlider
+			
+			jqvmap
+			assets/jqvmap
+			assets/jqvmap/Documentaion.txt
+			https://github.com/manifestinteractive/jqvmap
+			
+			jreject
+			assets/jreject
+			assets/jreject/Documentaion.txt
+			http://jreject.turnwheel.com/
+			
+			jwizard
+			assets/jwizard
+			assets/jwizard/Documentaion.txt
+			https://github.com/dominicbarnes/jWizard
+			
+			knob
+			assets/knob
+			assets/knob/Documentaion.txt
+			https://github.com/aterrien/jQuery-Knob
+			
+			laddabootstrap
+			assets/laddabootstrap
+			assets/laddabootstrap/Documentaion.txt
+			https://github.com/hakimel/Ladda
+			
+			markdown
+			assets/markdown
+			assets/markdown/Documentaion.txt
+			http://toopay.github.io/bootstrap-markdown/
+			
+			medium
+			assets/medium
+			assets/medium/Documentaion.txt
+			http://github.com/jakiestfu/Medium.js/
+			
+			messenger
+			assets/messenger
+			assets/messenger/Documentaion.txt
+			https://github.com/HubSpot/messenger
+			
+			modernbuttons
+			assets/modernbuttons
+			assets/modernbuttons/Documentaion.txt
+			https://github.com/ace-subido/css3-microsoft-metro-buttons
+			
+			nouislider
+			assets/nouislider
+			assets/nouislider/Documentaion.txt
+			https://github.com/leongersen/noUiSlider
+			
+			owlcarousel
+			assets/owlcarousel
+			assets/owlcarousel/Documentaion.txt
+			https://github.com/OwlFonk/OwlCarousel
+			
+			photosetgrid
+			assets/photosetgrid
+			assets/photosetgrid/Documentaion.txt
+			https://github.com/stylehatch/photoset-grid/
+			
+			pictonic
+			assets/pictonic
+			assets/pictonic/Documentaion.txt
+			https://pictonic.co/free
+			
+			pnotify
+			assets/pnotify
+			assets/pnotify/Documentaion.txt
+			http://pinesframework.org/pnotify/
+			
+			prism
+			assets/prism
+			assets/prism/Documentaion.txt
+			https://github.com/LeaVerou/prism
+			
+			rainyday
+			assets/rainyday
+			assets/rainyday/Documentaion.txt
+			https://github.com/maroslaw/rainyday.js
+			
+			raphaelicons
+			assets/raphaelicons
+			assets/raphaelicons/Documentaion.txt
+			http://icons.marekventur.de/
+			
+			select2
+			assets/select2
+			assets/select2/Documentaion.txt
+			http://ivaynberg.github.io/select2/
+			
+			selectboxIt
+			assets/selectboxIt
+			assets/selectboxIt/Documentaion.txt
+			https://github.com/gfranko/jquery.selectBoxIt.js
+			
+			skycons
+			assets/skycons
+			assets/skycons/Documentaion.txt
+			https://github.com/darkskyapp/skycons
+			
+			socialbootstrapbuttons
+			assets/socialbootstrapbuttons
+			assets/socialbootstrapbuttons/Documentaion.txt
+			https://github.com/noizwaves/bootstrap-social-buttons
+			
+			sparkline
+			assets/sparkline
+			assets/sparkline/Documentaion.txt
+			http://omnipotent.net/jquery.sparkline/ 
+			
+			spin
+			assets/spin
+			assets/spin/Documentaion.txt
+			https://github.com/fgnass/spin.js
+			
+			stepswizard
+			assets/stepswizard
+			assets/stepswizard/Documentaion.txt
+			https://github.com/rstaib/jquery-steps/
+			
+			summernote
+			assets/summernote
+			assets/summernote/Documentaion.txt
+			https://github.com/HackerWins/summernote/
+			
+			tablecloth
+			assets/tablecloth
+			assets/tablecloth/Documentaion.txt
+			https://github.com/bwsewell/tablecloth
+			
+			tagmanager
+			assets/tagmanager
+			assets/tagmanager/Documentaion.txt
+			https://github.com/max-favilli/tagmanager
+			
+			tinymce
+			assets/tinymce
+			assets/tinymce/Documentaion.txt
+			https://github.com/tinymce/tinymce
+			
+			toastr
+			assets/toastr
+			assets/toastr/Documentaion.txt
+			https://github.com/CodeSeven/toastr
+			
+			typeahead
+			assets/typeahead
+			assets/typeahead/Documentaion.txt
+			https://github.com/twitter/typeahead
+			
+			typicons
+			assets/typicons
+			assets/typicons/Documentaion.txt
+			https://github.com/fontello/typicons.font
+			
+			vex
+			assets/vex
+			assets/vex/Documentaion.txt
+			https://github.com/hubspot/vex
+			
+			wysihtml5
+			assets/wysihtml5
+			assets/wysihtml5/Documentaion.txt
+			https://github.com/xing/wysihtml5
+			
+			xcharts
+			assets/xcharts
+			assets/xcharts/Documentaion.txt
+			http://github.com/tenXer/xcharts
+			
+			xeditable
+			assets/xeditable
+			assets/xeditable/Documentaion.txt
+			http://github.com/vitalets/x-editable
+
+Include Css: <link href="assets/css/styles.css" rel="stylesheet">
+       		 <link href="assets/css/leftmenu.css" rel="stylesheet">
+       		 or 
+       		 <link href="assets/css/rightmenu.css" rel="stylesheet">
+       		 <link href="assets/css/topmenu.css" rel="stylesheet">
+       		 <link href="assets/css/topfixedmenu.css" rel="stylesheet">
+       		 Less stylesheets also included
+       		 
+       		 
+For Nav:
+			add left for left menu		 
+       		<nav class="sidenav left" role="navigation"></nav>
+       		or for right
+       		<nav class="sidenav right" role="navigation"></nav>
+       		or for top
+       		<nav class="sidenav top" role="navigation"></nav>
+       		or for top fixed
+       		<nav class="sidenav topf" role="navigation"></nav>
+       		
+Include overlay and controlshint for the menu:
+			<div class="overlay"></div>
+			<div class="controlshint"><img src="assets/img/swipe.png" alt="Menu Help"></div>
+			
+Wrap content in:
+			<section class="wrap">
+			
+			</section>
+			
+Include JS
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript">$(document).bind("mobileinit", function(){$.extend(  $.mobile , {autoInitializePage: false})});</script>
+        <script src="../../jquerymobile/jquery.mobile.custom.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/theme.js"></script>
+        
+For menu:
+        <script src="assets/js/leftmenu.js"></script>
+        <script src="assets/js/rightmenu.js"></script>
+        <script src="assets/js/topmenu.js"></script>
+        <script src="assets/js/topfixedmenu.js"></script>
+        
+Demo pages script is included in:
+        <script src="assets/js/script.js"></script>
+        
+And thats that
+
+
+Change Log
+
+1.1 Added URI scheme to jQuery include

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GMaps.js &mdash; Polylines</title>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+  <script type="text/javascript" src="../gmaps.js"></script>
+  <link rel="stylesheet" type="text/css" href="examples.css" />
+  <script type="text/javascript">
+    var map;
+    $(document).ready(function(){ 
+var cor = {
+url: 'correcto.png',
+origin: new google.maps.Point(0,0),
+anchor: new google.maps.Point(18,26),
+size: new google.maps.Size(34,29)
+};
+
+var ale = {
+url: 'alerta.png',
+origin: new google.maps.Point(0,0),
+anchor: new google.maps.Point(18,26),
+size: new google.maps.Size(34,29)
+};
+
+var err = {
+url: 'incorrecto.png',
+origin: new google.maps.Point(0,0),
+anchor: new google.maps.Point(18,26),
+size: new google.maps.Size(34,29)
+};
+      map = new GMaps({
+        el: '#map',
+		zoom: 11,
+        lat: 10.233843,      
+        lng: -67.331085,
+        click: function(e){
+          console.log(e);
+        }
+      });
+	  map.addMarker({
+        lat: 10.233843084608255,
+        lng: -67.33108520507812,
+        title: 'CAMIÓN ABC-001',
+		icon: err,
+        infoWindow: {
+          content: 'Unidad CAMIÓN ABC-001 <br/> A 120Km  Ref. 60 - 100Km <br/>Estatus: Alerta<br/>',
+		  maxWidth:600
+        }
+      });
+      path = [
+[10.233843084608255    ,    -67.33108520507812],
+[10.234856665318443    ,    -67.31597900390625],
+[10.228416149497146    ,    -67.31604337692261],
+[10.220497303462976    ,    -67.32406854629517],
+[10.215999311030915    ,    -67.34086990356445],
+[10.209600648770152    ,    -67.35453844070435],
+[10.212726084044037    ,    -67.39631652832031],
+[10.213739732131732    ,    -67.42292404174805],
+[10.18518740926906     ,    -67.44232177734375],
+[10.212768319445528    ,    -67.43120670318604],
+[10.211585726083609    ,    -67.44412422180176],
+[10.206855308671136    ,    -67.45785713195801],
+[10.228437266155943    ,    -67.47665405273438],
+[10.212029199109628    ,    -67.47407913208008],
+[10.222925770565718    ,    -67.47352123260498],
+[10.228986298792169    ,    -67.4779200553894],
+[10.215091257889162    ,    -67.51836776733398],
+[10.218132169837618    ,    -67.53072738647461],
+[10.208164627673044    ,    -67.56317138671875],
+[10.226410060506634    ,    -67.54257202148438],
+[10.209727356202828    ,    -67.55630493164062],
+[10.248919763444658    ,    -67.58595943450928],
+[10.291949808032683    ,    -67.63046264648438],
+[10.28249130152419     ,    -67.73208618164062],
+[10.237897388022969    ,    -67.87010192871094],
+[10.182484098188255    ,    -67.9779052734375],
+[10.129764960310906    ,    -68.03558349609375],
+[10.148183851611055    ,    -67.95026779174805],
+[10.174880912968488    ,    -67.96794891357422],
+[10.18180826683826    ,    -67.9336166381836]];
+
+      map.drawPolyline({
+        path: path,
+        strokeColor: '#F00',
+        strokeOpacity: 0.9,
+        strokeWeight: 4
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>GMaps.js &mdash; Polylines</h1>
+  <div class="row">
+    <div class="span11">
+      <div id="map"></div>
+    </div>
+  </div>
+</body>
+</html>

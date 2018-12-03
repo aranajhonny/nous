@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+        <link rel="shortcut icon" href="assets/ico/favicon.png">
+        <title>Legend</title>
+        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/bootstrapdatatables/css/DT_bootstrap.css" rel="stylesheet">
+        <link href="assets/selectboxIt/css/jquery.selectBoxIt.css" rel="stylesheet">
+        <link href="assets/bootstrapui/css/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+        <link href="assets/jqgridbootstrap/jqGrid/css/ui.jqgrid.css" rel="stylesheet">
+        <link href="assets/jqgridbootstrap/css/jqGrid.bootstrap.css" rel="stylesheet">
+        <link href="assets/css/styles.css" rel="stylesheet">
+        <link href="assets/css/leftmenu.css" rel="stylesheet">
+        <!--[if lt IE 9]>
+        <script src="assets/js/html5shiv.js"></script>
+        <script src="assets/js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <nav class="sidenav left" role="navigation">
+            <ul class="menu">
+                <li class="user">
+                    <div class="search-block">
+                        <input type="text" class="search">
+                        <span>Search <i class="fa fa-search"></i></span>
+                    </div>
+                    <div class="content">
+                        <img class="img-circle" height="54" src="assets/img/user.jpg" alt="">
+                        <p>Micheal Lance
+                            <br />
+                            <small>Lorem ipsum dolor sit amet</small>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a href="index.html">
+                        Dashboard 
+                        <div>
+                            <img src="assets/img/icons/dashboard.png" alt="">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        Layouts
+                        <div>
+                            <img src="assets/img/icons/cog.png" alt="">
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                        <li><a href="blank.php">Blank Page</a></li>
+                        <li><a href="leftmenu.html">Left Menu</a></li>
+                        <li><a href="rightmenu.html">Right Menu</a></li>
+                        <li><a href="topmenu.html">Top Menu</a></li>
+                        <li><a href="topmenufixed.html">Top Menu Fixed</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a>
+                        Ui Features
+                        <div>
+                            <img src="assets/img/icons/layers.png" alt="">
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                        <li>
+                            <a>
+                            Alerts <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="bootstrapalerts.html">Bootstrap Alerts</a></li>
+                                <li><a href="browserrejection.html">Browser Rejection</a></li>
+                                <li><a href="humanealerts.html">Humane Alerts</a></li>
+                                <li><a href="ionsoundalerts.html">Ion Sound Alerts</a></li>
+                                <li><a href="messengeralerts.html">Messenger Alerts</a></li>
+                                <li><a href="pinesalerts.html">Pines Notifications</a></li>
+                                <li><a href="toastralerts.html">Toastr Alerts</a></li>
+                                <li><a href="vexalerts.php">Vex Dialogs Alerts</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                            Buttons <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="3dbuttons.html">3D Buttons</a></li>
+                                <li><a href="buttons.php">Bootstrap Buttons</a></li>
+                                <li><a href="creativebuttons.html">Creative Buttons</a></li>
+                                <li><a href="laddabootstrap.html">Ladda Buttons</a></li>
+                                <li><a href="modernbuttons.html">Modern Buttons</a></li>
+                                <li><a href="socialbootstrap.html">Social Bootstrap Buttons</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="components.php">Components</a></li>
+                        <li><a href="grid.php">Grid</a></li>
+                        <li>
+                            <a>
+                            Icons <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="fontawesome.html">Font Awesome</a></li>
+                                <li><a href="glyphicons.html">Glyphicons</a></li>
+                                <li><a href="pictonicons.html">Pictonic Icons</a></li>
+                                <li><a href="raphaelicons.html">Rapha&#235;l Icons</a></li>
+                                <li><a href="themeicons.html">Theme Icons</a></li>
+                                <li><a href="typicons.html">Typicons Icons</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="jqueryui.html">jQuery Ui</a></li>
+                        <li><a href="typography.html">Typography</a></li>
+                        <li>
+                            <a>
+                            Widgets <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="dragwidgets.html">Draggable</a></li>
+                                <li><a href="treeview.html">Tree View</a></li>
+                                <li><a href="widgets.html">Widgets</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a>
+                        Forms Elements
+                        <div>
+                            <img src="assets/img/icons/mailopen.png" alt="">
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                        <li>
+                            <a>
+                            Components <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="formcomponents.html">Bootstrap Components</a></li>
+                                <li><a href="colorpicker.html">Color Pickers</a></li>
+                                <li><a href="datetimepicker.html">Date & Time Pickers</a></li>
+                                <li><a href="icheck.html">iCheck</a></li>
+                                <li>
+                                    <a>
+                                    Select Plugins <i class="fa fa-angle-right pull-right"></i>
+                                    </a>
+                                    <ul class="dropdown-menu second" role="menu">
+                                        <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                        <li><a href="bootstrapmultiselect.html">Bootstrap Multiselect</a></li>
+                                        <li><a href="bootstrapselect.html">Bootstrap Select</a></li>
+                                        <li><a href="chosen.html">Chosen</a></li>
+                                        <li><a href="select2.html">Select2</a></li>
+                                        <li><a href="selectboxit.html">SelectBoxIt</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a>
+                                    Range Sliders <i class="fa fa-angle-right pull-right"></i>
+                                    </a>
+                                    <ul class="dropdown-menu second" role="menu">
+                                        <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                        <li><a href="jqrangeslider.html">jQuery Range Slider</a></li>
+                                        <li><a href="jqueryuislider.html">jQuery Ui Sliders</a></li>
+                                        <li><a href="nouislider.html">noUiSlider</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a>
+                                    Tags <i class="fa fa-angle-right pull-right"></i>
+                                    </a>
+                                    <ul class="dropdown-menu second" role="menu">
+                                        <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                        <li><a href="bootstraptokenfield.html">Bootstrap Tokenfield</a></li>
+                                        <li><a href="tagmanager.html">Tag Manager</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="toggles.html">Toggles</a></li>
+                                <li><a href="validation.php">Validation</a></li>
+                                <li><a href="xeditable.html">X-editable</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                            Editors <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="markdown.html">Markdown</a></li>
+                                <li><a href="mediumeditor.html">Medium Editor</a></li>
+                                <li><a href="summernote.html">Summernote</a></li>
+                                <li><a href="tinymce.html">tinyMCE</a></li>
+                                <li><a href="wysihtml5.html">wysihtml5</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                            Wizards <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="fueluxwizard.html">Fuelux Wizard</a></li>
+                                <li><a href="jwizard.html">jWizard</a></li>
+                                <li><a href="stepswizard.html">Steps Wizard</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                            Upload <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="dropzone.html">Dropzone</a></li>
+                                <li><a href="inputfilestyle.html">Input File Style</a></li>
+                                <li><a href="jansyfileupload.html">Jansy File Upload</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a>
+                        Charts
+                        <div>
+                            <img src="assets/img/icons/charts.png" alt="">
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                        <li><a href="charts.html">Flot Charts</a></li>
+                        <li><a href="charts3.html">Other Charts</a></li>
+                        <li><a href="charts2.html">xCharts</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a>
+                        Maps
+                        <div>
+                            <img src="assets/img/icons/map.png" alt="">
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                        <li><a href="googlemaps.html">Google Maps</a></li>
+                        <li><a href="vectormaps.html">Vector Maps</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a>
+                        Example Pages 
+                        <div>
+                            <img src="assets/img/icons/documents.png" alt="">
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                        <li>
+                            <a>
+                            Blog <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="blogpost.html">Blog Post</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="comingsoon.html">Coming Soon</a></li>
+                        <li><a href="contact.php">Contact Us</a></li>
+                        <li>
+                            <a>
+                            Email <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="inbox.html">Inbox</a></li>
+                                <li><a href="readmessage.html">Read Message</a></li>
+                                <li><a href="writemessage.html">Write Message</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                            Error Pages <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="403.html">Error 403</a></li>
+                                <li><a href="404.html">Error 404</a></li>
+                                <li><a href="405.html">Error 405</a></li>
+                                <li><a href="500.html">Error 500</a></li>
+                                <li><a href="503.html">Error 503</a></li>
+                                <li><a href="maintenance.html">Maintenance</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="invoice.html">Invoice</a></li>
+                        <li><a href="lockscreen.html">Lock Screen</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li>
+                            <a>
+                            News <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="news.html">News Feed</a></li>
+                                <li><a href="newsarticle.html">News Article</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="searchresults.html">Search Results</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a>
+                        Miscellaneous 
+                        <div>
+                            <img src="assets/img/icons/folder.png" alt="">
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                        <li>
+                            <a>
+                            3rd Level <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li>
+                                    <a>
+                                    4th Level <i class="fa fa-angle-right pull-right"></i>
+                                    </a>
+                                    <ul class="dropdown-menu second" role="menu">
+                                        <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                        <li>
+                                            <a>
+                                            5th Level <i class="fa fa-angle-right pull-right"></i>
+                                            </a>
+                                            <ul class="dropdown-menu second" role="menu">
+                                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                                <li><a href="#">This could go on forever</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                            Calendar <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="fullcalendar.html">Full Calendar</a></li>
+                                <li><a href="biccalendar.html">Bic Calendar</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                            Gallery <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="gallery.html">Bootstrap Gallery</a></li>
+                                <li><a href="lightbox.html">Lightbox</a></li>
+                                <li><a href="photogrid.html">Photoset Grid</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                            Tables <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="tables.html">Bootstrap Tables</a></li>
+                                <li><a href="datatables.html">Data Tables</a></li>
+                                <li><a href="pricingtables.html">Pricing Tables</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                            Email Templates <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Back</a></li>
+                                <li><a href="../emails/newsletter.html">Newsletter</a></li>
+                                <li><a href="../emails/user.html">User</a></li>
+                                <li><a href="../emails/alert.html">User Alert</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="logout">
+                    <a href="login.html">
+                        Logout 
+                        <div>
+                            <img src="assets/img/icons/off.png" alt="">
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="overlay"></div>
+        <div class="controlshint"><img src="assets/img/swipe.png" alt="Menu Help"></div>
+        <section class="wrap">
+            <div class="container">
+            	<ol class="breadcrumb">
+					<li><a href="#">Miscellaneous</a></li>
+					<li><a href="#">Tables</a></li>
+					<li><a href="#">Data Tables</a></li>
+					<li class="pull-right"><a href="" class="text-muted"><i class="fa fa-refresh"></i></a></li>
+				</ol>
+            	<div class="row">
+            		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		                <div class="well">
+		                	<div class="header">Data Table Bootstrap <a class="headerclose"><i class="fa fa-times pull-right"></i></a> <a class="headerrefresh"><i class="fa fa-refresh pull-right"></i></a> <a class="headershrink"><i class="fa fa-chevron-down pull-right"></i></a></div>
+			                <table class="table table-striped table-bordered" id="managed-table">
+			                    <thead>
+			                        <tr>
+			                            <th>Rendering engine</th>
+			                            <th>Browser</th>
+			                            <th>Platform(s)</th>
+			                            <th>Engine version</th>
+			                            <th>CSS grade</th>
+			                        </tr>
+			                    </thead>
+			                    <tbody>
+			                        <tr class="odd gradeX">
+			                            <td>Trident</td>
+			                            <td>Internet
+			                                Explorer 4.0
+			                            </td>
+			                            <td>Win 95+</td>
+			                            <td class="center"> 4</td>
+			                            <td class="center">X</td>
+			                        </tr>
+			                        <tr class="even gradeC">
+			                            <td>Trident</td>
+			                            <td>Internet
+			                                Explorer 5.0
+			                            </td>
+			                            <td>Win 95+</td>
+			                            <td class="center">5</td>
+			                            <td class="center">C</td>
+			                        </tr>
+			                        <tr class="odd gradeA">
+			                            <td>Trident</td>
+			                            <td>Internet
+			                                Explorer 5.5
+			                            </td>
+			                            <td>Win 95+</td>
+			                            <td class="center">5.5</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="even gradeA">
+			                            <td>Trident</td>
+			                            <td>Internet
+			                                Explorer 6
+			                            </td>
+			                            <td>Win 98+</td>
+			                            <td class="center">6</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="odd gradeA">
+			                            <td>Trident</td>
+			                            <td>Internet Explorer 7</td>
+			                            <td>Win XP SP2+</td>
+			                            <td class="center">7</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="even gradeA">
+			                            <td>Trident</td>
+			                            <td>AOL browser (AOL desktop)</td>
+			                            <td>Win XP</td>
+			                            <td class="center">6</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Firefox 1.0</td>
+			                            <td>Win 98+ / OSX.2+</td>
+			                            <td class="center">1.7</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Firefox 1.5</td>
+			                            <td>Win 98+ / OSX.2+</td>
+			                            <td class="center">1.8</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Firefox 2.0</td>
+			                            <td>Win 98+ / OSX.2+</td>
+			                            <td class="center">1.8</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Firefox 3.0</td>
+			                            <td>Win 2k+ / OSX.3+</td>
+			                            <td class="center">1.9</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Camino 1.0</td>
+			                            <td>OSX.2+</td>
+			                            <td class="center">1.8</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Camino 1.5</td>
+			                            <td>OSX.3+</td>
+			                            <td class="center">1.8</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Netscape 7.2</td>
+			                            <td>Win 95+ / Mac OS 8.6-9.2</td>
+			                            <td class="center">1.7</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Netscape Browser 8</td>
+			                            <td>Win 98SE+</td>
+			                            <td class="center">1.7</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Netscape Navigator 9</td>
+			                            <td>Win 98+ / OSX.2+</td>
+			                            <td class="center">1.8</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Mozilla 1.0</td>
+			                            <td>Win 95+ / OSX.1+</td>
+			                            <td class="center">1</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Mozilla 1.1</td>
+			                            <td>Win 95+ / OSX.1+</td>
+			                            <td class="center">1.1</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Mozilla 1.2</td>
+			                            <td>Win 95+ / OSX.1+</td>
+			                            <td class="center">1.2</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Mozilla 1.3</td>
+			                            <td>Win 95+ / OSX.1+</td>
+			                            <td class="center">1.3</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Mozilla 1.4</td>
+			                            <td>Win 95+ / OSX.1+</td>
+			                            <td class="center">1.4</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Mozilla 1.5</td>
+			                            <td>Win 95+ / OSX.1+</td>
+			                            <td class="center">1.5</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Mozilla 1.6</td>
+			                            <td>Win 95+ / OSX.1+</td>
+			                            <td class="center">1.6</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Mozilla 1.7</td>
+			                            <td>Win 98+ / OSX.1+</td>
+			                            <td class="center">1.7</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Mozilla 1.8</td>
+			                            <td>Win 98+ / OSX.1+</td>
+			                            <td class="center">1.8</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Seamonkey 1.1</td>
+			                            <td>Win 98+ / OSX.2+</td>
+			                            <td class="center">1.8</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Gecko</td>
+			                            <td>Epiphany 2.20</td>
+			                            <td>Gnome</td>
+			                            <td class="center">1.8</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Webkit</td>
+			                            <td>Safari 1.2</td>
+			                            <td>OSX.3</td>
+			                            <td class="center">125.5</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Webkit</td>
+			                            <td>Safari 1.3</td>
+			                            <td>OSX.3</td>
+			                            <td class="center">312.8</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Webkit</td>
+			                            <td>Safari 2.0</td>
+			                            <td>OSX.4+</td>
+			                            <td class="center">419.3</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Webkit</td>
+			                            <td>Safari 3.0</td>
+			                            <td>OSX.4+</td>
+			                            <td class="center">522.1</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Webkit</td>
+			                            <td>OmniWeb 5.5</td>
+			                            <td>OSX.4+</td>
+			                            <td class="center">420</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Webkit</td>
+			                            <td>iPod Touch / iPhone</td>
+			                            <td>iPod</td>
+			                            <td class="center">420.1</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Webkit</td>
+			                            <td>S60</td>
+			                            <td>S60</td>
+			                            <td class="center">413</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Presto</td>
+			                            <td>Opera 7.0</td>
+			                            <td>Win 95+ / OSX.1+</td>
+			                            <td class="center">-</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Presto</td>
+			                            <td>Opera 7.5</td>
+			                            <td>Win 95+ / OSX.2+</td>
+			                            <td class="center">-</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Presto</td>
+			                            <td>Opera 8.0</td>
+			                            <td>Win 95+ / OSX.2+</td>
+			                            <td class="center">-</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Presto</td>
+			                            <td>Opera 8.5</td>
+			                            <td>Win 95+ / OSX.2+</td>
+			                            <td class="center">-</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Presto</td>
+			                            <td>Opera 9.0</td>
+			                            <td>Win 95+ / OSX.3+</td>
+			                            <td class="center">-</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Presto</td>
+			                            <td>Opera 9.2</td>
+			                            <td>Win 88+ / OSX.3+</td>
+			                            <td class="center">-</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Presto</td>
+			                            <td>Opera 9.5</td>
+			                            <td>Win 88+ / OSX.3+</td>
+			                            <td class="center">-</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Presto</td>
+			                            <td>Opera for Wii</td>
+			                            <td>Wii</td>
+			                            <td class="center">-</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Presto</td>
+			                            <td>Nokia N800</td>
+			                            <td>N800</td>
+			                            <td class="center">-</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Presto</td>
+			                            <td>Nintendo DS browser</td>
+			                            <td>Nintendo DS</td>
+			                            <td class="center">8.5</td>
+			                            <td class="center">C/A<sup>1</sup></td>
+			                        </tr>
+			                        <tr class="gradeC">
+			                            <td>KHTML</td>
+			                            <td>Konqureror 3.1</td>
+			                            <td>KDE 3.1</td>
+			                            <td class="center">3.1</td>
+			                            <td class="center">C</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>KHTML</td>
+			                            <td>Konqureror 3.3</td>
+			                            <td>KDE 3.3</td>
+			                            <td class="center">3.3</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>KHTML</td>
+			                            <td>Konqureror 3.5</td>
+			                            <td>KDE 3.5</td>
+			                            <td class="center">3.5</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeX">
+			                            <td>Tasman</td>
+			                            <td>Internet Explorer 4.5</td>
+			                            <td>Mac OS 8-9</td>
+			                            <td class="center">-</td>
+			                            <td class="center">X</td>
+			                        </tr>
+			                        <tr class="gradeC">
+			                            <td>Tasman</td>
+			                            <td>Internet Explorer 5.1</td>
+			                            <td>Mac OS 7.6-9</td>
+			                            <td class="center">1</td>
+			                            <td class="center">C</td>
+			                        </tr>
+			                        <tr class="gradeC">
+			                            <td>Tasman</td>
+			                            <td>Internet Explorer 5.2</td>
+			                            <td>Mac OS 8-X</td>
+			                            <td class="center">1</td>
+			                            <td class="center">C</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Misc</td>
+			                            <td>NetFront 3.1</td>
+			                            <td>Embedded devices</td>
+			                            <td class="center">-</td>
+			                            <td class="center">C</td>
+			                        </tr>
+			                        <tr class="gradeA">
+			                            <td>Misc</td>
+			                            <td>NetFront 3.4</td>
+			                            <td>Embedded devices</td>
+			                            <td class="center">-</td>
+			                            <td class="center">A</td>
+			                        </tr>
+			                        <tr class="gradeX">
+			                            <td>Misc</td>
+			                            <td>Dillo 0.8</td>
+			                            <td>Embedded devices</td>
+			                            <td class="center">-</td>
+			                            <td class="center">X</td>
+			                        </tr>
+			                        <tr class="gradeX">
+			                            <td>Misc</td>
+			                            <td>Links</td>
+			                            <td>Text only</td>
+			                            <td class="center">-</td>
+			                            <td class="center">X</td>
+			                        </tr>
+			                        <tr class="gradeX">
+			                            <td>Misc</td>
+			                            <td>Lynx</td>
+			                            <td>Text only</td>
+			                            <td class="center">-</td>
+			                            <td class="center">X</td>
+			                        </tr>
+			                        <tr class="gradeC">
+			                            <td>Misc</td>
+			                            <td>IE Mobile</td>
+			                            <td>Windows Mobile 6</td>
+			                            <td class="center">-</td>
+			                            <td class="center">C</td>
+			                        </tr>
+			                        <tr class="gradeC">
+			                            <td>Misc</td>
+			                            <td>PSP browser</td>
+			                            <td>PSP</td>
+			                            <td class="center">-</td>
+			                            <td class="center">C</td>
+			                        </tr>
+			                        <tr class="gradeU">
+			                            <td>Other browsers</td>
+			                            <td>All others</td>
+			                            <td>-</td>
+			                            <td class="center">-</td>
+			                            <td class="center">U</td>
+			                        </tr>
+			                    </tbody>
+			                </table>
+		                </div>
+		                <div class="well">
+		                	<div class="header">jQuery Grid Bootstrap <a class="headerclose"><i class="fa fa-times pull-right"></i></a> <a class="headerrefresh"><i class="fa fa-refresh pull-right"></i></a> <a class="headershrink"><i class="fa fa-chevron-down pull-right"></i></a></div>
+		                	<div class="jqgrid">
+								<table id="jqGrid01"></table>
+								<div id="jqGridPager01"></div>	
+		                	</div>							
+		                </div>
+            		</div>
+            	</div>
+            </div>
+        </section>
+        <script src="../../jquery/development-bundle/jquery-1.10.2.js"></script>
+        <script type="text/javascript">$(document).bind("mobileinit", function(){$.extend(  $.mobile , {autoInitializePage: false})});</script>
+        <script src="../../jquerymobile/jquery.mobile.custom.js"></script>
+        <script src="assets/bootstrapui/js/jquery-ui-1.9.2.custom.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/bootstrapdatatables/js/jquery.dataTables.js"></script>
+        <script src="assets/bootstrapdatatables/js/DT_bootstrap.js"></script>
+        <script src="assets/selectboxIt/js/jquery.selectBoxIt.min.js"></script>
+        <script src="assets/jqgridbootstrap/jqGrid/js/i18n/grid.locale-en.js"></script>
+        <script src="assets/jqgridbootstrap/jqGrid/js/jquery.jqGrid.min.js"></script>
+        <script src="assets/js/leftmenu.js"></script>
+        <script src="assets/js/theme.js"></script>
+        <script src="assets/js/script.js"></script>
+        <script>datatables();</script>
+    </body>
+</html>
