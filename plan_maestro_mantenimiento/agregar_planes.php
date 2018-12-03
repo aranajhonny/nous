@@ -62,9 +62,9 @@ if(empty($des)){ $_SESSION['mensaje1']="Debe indicar el nombre";
 $sql="insert into planmant(id_cliente, id_confunid, id_tipo_sensor, id_unidad_medida, descripcion, valor, tiempo, id_unidad_tiempo, id_responsable, valor_prom, tipo_prog, id_planmaes, id_modelo, id_tipo_mant, valor_min, valor_max, tiempo_min, tiempo_max, porc_tol, id_provserv) values ($cli, $conf, $sensor, $unidmed, '$des', $val, $tiempo, 0, $res, $prom, '$prog', $maestro, $mod, 0, $val_min, $val_max, $tiempo_min, $tiempo_max, $porc, $proveedor)";
 
 
-	$rs = pg_query($sql);
+	$rs = pg_query($link,$sql);
 	if($rs){ 
-$rs = pg_query("select max(id_planmant) from planmant");
+$rs = pg_query($link,"select max(id_planmant) from planmant");
 $rs = pg_fetch_array($rs); $id = $rs[0];
 
 Auditoria("En Agregar Plan Maestro de Mantenimiento Agrego Plan de Mantenimiento: $des",$id);
@@ -78,11 +78,11 @@ for($i=1; $i<=$CantItems; $i++){
 if(empty($sql2)==false){ 
 $sql2 = "insert into det_planmant(id_planmant, id_composicion, descripcion, id_provserv) values ".$sql2;
 	$sql2 = substr($sql2,0,(strlen($sql2)-1)).";";
-	pg_query($sql2);
+	pg_query($link,$sql2);
 	Auditoria("En Agregar Plan Maestro de Mantenimiento Se Agregaron Detalles del Plan de Mantenimiento: $des",$id);
 }
 /* ============================================================================== */
-pg_query("insert instrucciones(id_planmant, html) values ($id, '$inst')");
+pg_query($link,"insert instrucciones(id_planmant, html) values ($id, '$inst')");
 Auditoria("En Agregar Plan Maestro de Mantenimiento Se Agregaron Instrucciones para el Plan de Mantenimiento: $des",$id);
 /* ============================================================================== */
 	$_SESSION['mensaje3']="Plan de Mantenimiento Agregado al Plan Maestro";
@@ -166,7 +166,7 @@ if(isset($_SESSION['ptc'])){ ?>
 <div class="well">
 <div class="header">Plan Maestro de Mantenimiento Paso 2<a class="headerclose"><i class="fa fa-times pull-right"></i></a> <a class="headerrefresh"><i class="fa fa-refresh pull-right"></i></a> <a class="headershrink"><i class="fa fa-chevron-down pull-right"></i></a></div>
 
-<?php $rs = pg_query("select nombre from planmaes where id_planmaes = ".$_SESSION['master']['id']); $rs = pg_fetch_array($rs); $maestro = $rs[0]; ?>
+<?php $rs = pg_query($link,"select nombre from planmaes where id_planmaes = ".$_SESSION['master']['id']); $rs = pg_fetch_array($rs); $maestro = $rs[0]; ?>
 <div class="form-group"><label>Plan Maestro</label>
 <input id="ma" name="ma" type="text" placeholder="Nombre del Plan de Maestro" class="form-control" maxlength="250" value="<?php echo $maestro;?>" readonly="readonly"/></div>
 
@@ -182,7 +182,7 @@ if(isset($_SESSION['ptc'])){ ?>
 		</tr>
 	</thead>
 	<tbody>
-<?php $rs = pg_query("select id_planmant, descripcion, valor, tiempo, porc_tol from planmant where id_planmaes = ".$_SESSION['master']['id']." order by valor asc "); 
+<?php $rs = pg_query($link,"select id_planmant, descripcion, valor, tiempo, porc_tol from planmant where id_planmaes = ".$_SESSION['master']['id']." order by valor asc "); 
 $r = pg_num_rows($rs);
 if($r==false || $r<1){ ?>
 <tr><td colspan="5">Recuerde Que Debe Agregar Planes de Mantenimiento</td></tr>
