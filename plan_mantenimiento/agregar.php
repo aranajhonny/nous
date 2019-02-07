@@ -72,9 +72,9 @@ if(empty($des)){ $_SESSION['mensaje1']="Debe indicar el nombre";
 
 $sql="insert into planmant(id_cliente, id_confunid, id_tipo_sensor, id_unidad_medida, descripcion, valor, tiempo, id_unidad_tiempo, id_responsable, valor_prom, tipo_prog, id_planmaes, id_modelo, id_tipo_mant, valor_min, valor_max, tiempo_min, tiempo_max, porc_tol, id_provserv) values ($cli, $conf, $sensor, $unidmed, '$des', $val, $tiempo, 0, $res, $prom, '$prog', $maestro, $mod, 0, $val_min, $val_max, $tiempo_min, $tiempo_max, $porc, $proveedor)";
 
-	$rs = pg_query($sql);
+	$rs = pg_query($link, $sql);
 	if($rs){ 
-$rs = pg_query("select max(id_planmant) from planmant");
+$rs = pg_query($link, "select max(id_planmant) from planmant");
 $rs = pg_fetch_array($rs); $id = $rs[0];
 Auditoria("Agrego Plan de Mantenimiento: $des",$rs[0]);
 /* ============================================================================== */
@@ -87,11 +87,11 @@ for($i=1; $i<=$CantItems; $i++){
 if(empty($sql2)==false){ 
 	$sql2 = "insert into det_planmant(id_planmant, id_composicion, descripcion, id_provserv) values ".$sql2;
 	$sql2 = substr($sql2,0,(strlen($sql2)-1)).";";
-	pg_query($sql2);
+	pg_query($link, $sql2);
 	Auditoria("En Agregar Plan de Mantenimiento se registraron los Detalles del Mantenimiento para el plan: $des",$id);
 }
 /* ============================================================================== */
-pg_query("insert into instrucciones(id_planmant, html) values ($id, '$inst')");
+pg_query($link, "insert into instrucciones(id_planmant, html) values ($id, '$inst')");
 Auditoria("En Agregar Plan de MAntenimiento se registraron las instrucciones para el plan: $des",$id);
 /* ============================================================================== */
 		$_SESSION['mensaje3']="Plan de Mantenimiento Agregado";
@@ -207,7 +207,7 @@ if(isset($_SESSION['ptc'])){ ?>
 <div class="form-group"><label>Tipo de Sensor</label>
 <div><select id="sensor" name="sensor" class="selectpicker" onchange="bloquear();">
 <option value="0" selected="selected">Seleccione un Tipo de Sensor</option>
-<?php $rs=pg_query("select id_tipo_sensor, descripcion, unidmed.id_unidmed, magnitudes.nombre, unidmed.nombre from tipo_sensores, magnitudes, unidmed  
+<?php $rs=pg_query($link, "select id_tipo_sensor, descripcion, unidmed.id_unidmed, magnitudes.nombre, unidmed.nombre from tipo_sensores, magnitudes, unidmed  
 where  tipo_sensores.id_unidmed = unidmed.id_unidmed and
 magnitudes.id_magnitud = unidmed.id_magnitud 
 order by descripcion asc ");

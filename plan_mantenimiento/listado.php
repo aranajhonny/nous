@@ -89,11 +89,11 @@ if(isset($_SESSION['ptc'])){ ?>
 $t=filtrar_campo('int', 6, $_SESSION['miss'][2]);
 $c=filtrar_campo('int', 6, $_SESSION['miss'][3]);
 
-$rs = pg_query("select id_planmant, descripcion, confunid.codigo_principal, id_tipo_sensor from planmant, confunid where (planmant.id_cliente=$c and confunid.id_cliente=$c) and (confunid.id_confunid=$t or $t<1) and planmant.id_confunid = confunid.id_confunid order by descripcion asc "); 
+$rs = pg_query($link,"select id_planmant, descripcion, confunid.codigo_principal, id_tipo_sensor from planmant, confunid where (planmant.id_cliente=$c and confunid.id_cliente=$c) and (confunid.id_confunid=$t or $t<1) and planmant.id_confunid = confunid.id_confunid order by descripcion asc "); 
 $r = pg_num_rows($rs);
 if($r!=false && $r>0){ while($r = pg_fetch_array($rs)){ 
 if($r[3]==0){ $tipo_sensor = "- -"; } else { 
-$qs = pg_query("select descripcion from tipo_sensores where id_tipo_sensor = ".$r[3]);
+$qs = pg_query($link,"select descripcion from tipo_sensores where id_tipo_sensor = ".$r[3]);
 $qs = pg_fetch_array($qs); $tipo_sensor = $qs[0]; }?>    
 <tr><td><div class=" info-tooltip">
 

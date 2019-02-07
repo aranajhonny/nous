@@ -11,7 +11,7 @@ include("../complementos/permisos.php");
 if(isset($_REQUEST['plan'])){ $_SESSION['planmant']=$_REQUEST['plan']; }
 
 if(isset($_SESSION['planmant'])){
-$rs = pg_query("select * from planmant where id_planmant = ".$_SESSION['planmant']);
+$rs = pg_query($link, "select * from planmant where id_planmant = ".$_SESSION['planmant']);
 $rs = pg_fetch_array($rs);
 $cli = $rs[1];
 $res = $rs[2];
@@ -33,36 +33,36 @@ $tiempo_max = $rs[18]." Días";
 $prog = $rs[19];
 $prov = $rs[20];
 
-$rs = pg_query("select rif, razon_social from clientes where id_cliente = $cli");
+$rs = pg_query($link, "select rif, razon_social from clientes where id_cliente = $cli");
 $rs = pg_fetch_array($rs); $cli = $rs[0]." ".$rs[1];
 
-$rs = pg_query("select codigo_principal from confunid where id_confunid = $conf");
+$rs = pg_query($link, "select codigo_principal from confunid where id_confunid = $conf");
 $rs = pg_fetch_array($rs); $conf = $rs[0];
 
-$rs = pg_query("select ci, nombre from personal where id_personal = $res");
+$rs = pg_query($link, "select ci, nombre from personal where id_personal = $res");
 $rs = pg_fetch_array($rs); $res = $rs[0]." ".$rs[1];
 
 if($sensor==0){ $sensor="- -"; } else { 
-$rs = pg_query("select descripcion, nombre from tipo_sensores where id_tipo_sensor = $sensor");
+$rs = pg_query($link, "select descripcion, nombre from tipo_sensores where id_tipo_sensor = $sensor");
 $rs = pg_fetch_array($rs); $sensor = $rs[0]." ".$rs[1]; }
 
 if($unidmed==0){ $unidmed="- -"; } else { 
-$rs = pg_query("select magnitudes.nombre, unidmed.nombre from magnitudes, unidmed where unidmed.id_magnitud = magnitudes.id_magnitud and  id_unidmed = $unidmed");
+$rs = pg_query($link, "select magnitudes.nombre, unidmed.nombre from magnitudes, unidmed where unidmed.id_magnitud = magnitudes.id_magnitud and  id_unidmed = $unidmed");
 $rs = pg_fetch_array($rs); $unidmed = $rs[0]." ".$rs[1]; }
 
 if($maestro==0){ $maestro="- -"; } else { 
-$rs = pg_query("select nombre from planmaes where id_planmaes = $maestro");
+$rs = pg_query($link, "select nombre from planmaes where id_planmaes = $maestro");
 $rs = pg_fetch_array($rs); $maestro = $rs[0]; }
 
 if($mod==0){ $mod="- -"; } else { 
-$rs = pg_query("select marcas.descripcion, modelos.descripcion from marcas, modelos where modelos.id_marca = marcas.id_marca and id_modelo = $mod");
+$rs = pg_query($link, "select marcas.descripcion, modelos.descripcion from marcas, modelos where modelos.id_marca = marcas.id_marca and id_modelo = $mod");
 $rs = pg_fetch_array($rs); $mod = $rs[0]." - ".$rs[1]; }
 
 if($prov==0){ $prov="- -"; } else { 
-$rs = pg_query("select rif, nombre_prov from provserv where id_provserv = $prov");
+$rs = pg_query($link, "select rif, nombre_prov from provserv where id_provserv = $prov");
 $rs = pg_fetch_array($rs); $prov = $rs[0]." ".$rs[1]; }
 
-$rs = pg_query("select html from instrucciones where id_planmant = ".$_SESSION['planmant']);
+$rs = pg_query($link, "select html from instrucciones where id_planmant = ".$_SESSION['planmant']);
 $r = pg_num_rows($rs);
 if($r==false || $r==0){ $inst=""; 
 } else { 
@@ -73,18 +73,18 @@ if($r==false || $r==0){ $inst="";
 $detalle[1] = array ( 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 );
 $detalle[0] = array ( "","","","","", "","","","","", "","","","","" );
 
-$rs = pg_query("select descripcion, id_composicion, id_provserv from det_planmant where id_planmant = ".$_SESSION['planmant']." order by id_detplanmant asc ");
+$rs = pg_query($link, "select descripcion, id_composicion, id_provserv from det_planmant where id_planmant = ".$_SESSION['planmant']." order by id_detplanmant asc ");
 $r = pg_num_rows($rs);
 if($r!=false && $r>0){ $i=0; 
 	while($r = pg_fetch_array($rs)){ 
 		$detalle[0][$i] = $r[0];
 		if($r[1]==0){ $detalle[1][$i] = "- -"; } else { 
-$qs = pg_query("select nombre from composiciones where id_composicion=".$r[1]);
+$qs = pg_query($link, "select nombre from composiciones where id_composicion=".$r[1]);
 			$qs = pg_fetch_array($qs);
 			$detalle[1][$i] = $qs[0];
 		} 
 		if($r[2]==0){ $detalle[2][$i] = "- -"; } else { 
-$qs = pg_query("select rif, nombre_prov from provserv where id_provserv=".$r[2]);
+$qs = pg_query($link, "select rif, nombre_prov from provserv where id_provserv=".$r[2]);
 			$qs = pg_fetch_array($qs);
 			$detalle[2][$i] = $qs[0]." ".$qs[1];
 		} 
