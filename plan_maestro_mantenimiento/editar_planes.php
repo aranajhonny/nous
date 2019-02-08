@@ -69,9 +69,9 @@ if(empty($des)){ $_SESSION['mensaje1']="Debe indicar el nombre";
 } else { // si validar 
 
 $sql="insert into planmant(id_cliente, id_confunid, id_tipo_sensor, id_unidad_medida, descripcion, valor, tiempo, id_unidad_tiempo, id_responsable, valor_prom, tipo_prog, id_planmaes, id_modelo, id_tipo_mant, valor_min, valor_max, tiempo_min, tiempo_max, porc_tol, id_provserv) values ($cli, $conf, $sensor, $unidmed, '$des', $val, $tiempo, 0, $res, $prom, '$prog', $maestro, $mod, 0, $val_min, $val_max, $tiempo_min, $tiempo_max, $porc, $proveedor)";
-	$rs = pg_query($sql);
+	$rs = pg_query($link, $sql);
 	if($rs){ 
-$rs = pg_query("select max(id_planmant) from planmant");
+$rs = pg_query($link, "select max(id_planmant) from planmant");
 $rs = pg_fetch_array($rs); $id = $rs[0];
 Auditoria("En Editar Plan Maestro de Mantenimiento Se Agrego Plan de Mantenimiento: $des",$rs[0]);
 
@@ -85,11 +85,11 @@ for($i=0; $i<($CantItems+1); $i++){
 if(empty($sql2)==false){ 
 	$sql2 = "insert into det_planmant(id_planmant, id_composicion, descripcion, id_provserv) values ".$sql2;
 	$sql2 = substr($sql2,0,(strlen($sql2)-1)).";";
-	pg_query($sql2);
+	pg_query($link, $sql2);
 	Auditoria("En Editar Plan Maestro de Mantenimiento Se Agregaron Detalles del Plan de Mantenimiento: $des",$id);
 }
 /* ============================================================================== */
-pg_query("insert into instrucciones(id_planmant, html) values ($id, '$inst')");
+pg_query($link, "insert into instrucciones(id_planmant, html) values ($id, '$inst')");
 Auditoria("En Editar Plan Maestro de Mantenimiento Se Agregaron Instrucciones para el Plan de Mantenimiento: $des",$id);
 /* ============================================================================== */
 	$_SESSION['mensaje3']="Plan de Mantenimiento Agregado al Plan Maestro";
@@ -140,7 +140,7 @@ if(empty($des)){ $_SESSION['mensaje1']="Debe indicar el nombre";
 } else { // si validar 
 
 $sql="update planmant set descripcion='$des', valor=$val, tiempo=$tiempo, valor_min = $val_min, valor_max = $val_max, tiempo_min = $tiempo_min, tiempo_max = $tiempo_max where id_planmant = ".$_SESSION['master']['planmant'];
-	$rs = pg_query($link,$sql);
+	$rs = pg_query($link, $link,$sql);
 	if($rs){ 
 	Auditoria("En Plan Maestro de Mantenimiento Se Actualizo Plan de Mantenimiento: $des",$_SESSION['master']['planmant']);
 
@@ -157,16 +157,16 @@ if(empty($_SESSION['planmaestro']['det'][$i][1])==false){
 		$sql = "update det_planmant set id_composicion=".$_SESSION['planmaestro']['det'][$i][2].", descripcion='".$_SESSION['planmaestro']['det'][$i][1]."', id_provserv = ".$_SESSION['planmaestro']['det'][$i][3]." where id_detplanmant = ".$_SESSION['planmaestro']['det'][$i][0];
 		Auditoria("En Plan Maestro de Mantenimiento Se Actualizo El Detalle al Plan de Mantenimiento: $des",$_SESSION['master']['planmant']);
 	} 
-	pg_query($link,$sql);
+	pg_query($link, $link,$sql);
 } } 
 /* ============================================================================== */
-$rs = pg_query($link,"select count(id_instruccion) from instrucciones where id_planmant = $id");
+$rs = pg_query($link, $link,"select count(id_instruccion) from instrucciones where id_planmant = $id");
 $rs = pg_fetch_array($rs);
 if($rs[0]==0){ 
-	pg_query($link,"insert into instrucciones(id_planmant, html) values ($id, '$inst')");
+	pg_query($link, $link,"insert into instrucciones(id_planmant, html) values ($id, '$inst')");
 	Auditoria("En Plan Maestro de Mantenimiento Se Agrego La Instrucción para el Plan de Mantenimiento: $des",$id);
 } else { 
-	pg_query($link,"update instrucciones set html='$inst' where id_planmant = $id");
+	pg_query($link, $link,"update instrucciones set html='$inst' where id_planmant = $id");
 	Auditoria("En Plan Maestro de Mantenimiento Se Actualizo Las Instrucciones para el Plan de Mantenimiento: $des",$id);
 }
 /* ============================================================================== */
@@ -194,14 +194,14 @@ Auditoria("En Plan Maestro de Mantenimiento Accedio a Agregar Nuevo Plan de Mant
 
 } else if(isset($_REQUEST['plan'])){
 $_SESSION['master']['planmant'] = $_REQUEST['plan'];
-$rs =pg_query($link,"select * from planmant where id_planmant = ".$_SESSION['master']['planmant']);
+$rs =pg_query($link, $link,"select * from planmant where id_planmant = ".$_SESSION['master']['planmant']);
 $rs = pg_fetch_array($rs);
 
 $des = $rs[10]; 
 $val = 1*$rs[12]; $val_min = 1*$rs[14]; $val_max = 1*$rs[15];
 $tiempo = $rs[16]; $tiempo_min = $rs[17]; $tiempo_max = $rs[18];
 
-$rs = pg_query($link,"select html from instrucciones where id_planmant = ".$_SESSION['master']['planmant']);
+$rs = pg_query($link, $link,"select html from instrucciones where id_planmant = ".$_SESSION['master']['planmant']);
 $r = pg_num_rows($rs);
 if($r==false || $r==0){ $inst=""; 
 } else { 
@@ -209,7 +209,7 @@ if($r==false || $r==0){ $inst="";
 	$inst = $rs[0];
 }
 
-$rs = pg_query($link,"select id_detplanmant, descripcion, id_composicion, id_provserv from det_planmant where id_planmant = ".$_SESSION['master']['planmant']." order by id_detplanmant asc ");
+$rs = pg_query($link, $link,"select id_detplanmant, descripcion, id_composicion, id_provserv from det_planmant where id_planmant = ".$_SESSION['master']['planmant']." order by id_detplanmant asc ");
 $r = pg_num_rows($rs);
 if($r!=false && $r>0){ $i=0; 
 	while($r = pg_fetch_array($rs)){ 
@@ -229,13 +229,13 @@ Auditoria("En Plan Maestro de Mantenimiento Accedio a Ver El Plan de Mantenimien
 
 
 } else if(isset($_SESSION['master']['planmant'])){	
-$rs =pg_query($link,"select * from planmant where id_planmant = ".$_SESSION['master']['planmant']);
+$rs =pg_query($link, $link,"select * from planmant where id_planmant = ".$_SESSION['master']['planmant']);
 $rs = pg_fetch_array($rs);
 $des = $rs[10]; 
 $val = 1*$rs[12]; $val_min = 1*$rs[14]; $val_max = 1*$rs[15];
 $tiempo = $rs[16]; $tiempo_min = $rs[17]; $tiempo_max = $rs[18];
 
-$rs = pg_query($link,"select html from instrucciones where id_planmant = ".$_SESSION['master']['planmant']);
+$rs = pg_query($link, $link,"select html from instrucciones where id_planmant = ".$_SESSION['master']['planmant']);
 $r = pg_num_rows($rs);
 if($r==false || $r==0){ $inst=""; 
 } else { 
@@ -243,7 +243,7 @@ if($r==false || $r==0){ $inst="";
 	$inst = $rs[0];
 }
 
-$rs = pg_query($link,"select id_detplanmant, descripcion, id_composicion, id_provserv from det_planmant where id_planmant = ".$_SESSION['master']['planmant']." order by id_detplanmant asc ");
+$rs = pg_query($link, $link,"select id_detplanmant, descripcion, id_composicion, id_provserv from det_planmant where id_planmant = ".$_SESSION['master']['planmant']." order by id_detplanmant asc ");
 $r = pg_num_rows($rs);
 if($r!=false && $r>0){ $i=0; 
 	while($r = pg_fetch_array($rs)){ 
@@ -262,7 +262,7 @@ Auditoria("En Plan Maestro de Mantenimiento Accedio a Ver El Plan de Mantenimien
 	
 
 } else if(isset($_SESSION['master'])){ 
-$rs = pg_query($link,"select * from planmaes where id_planmaes = ".$_SESSION['master']['id']); 
+$rs = pg_query($link, $link,"select * from planmaes where id_planmaes = ".$_SESSION['master']['id']); 
 $rs = pg_fetch_array($rs);
 
 $_SESSION['master']['cli'] = $rs[3];
@@ -339,7 +339,7 @@ if(isset($_SESSION['ptc'])){ ?>
 <div class="well">
 <div class="header">Plan Maestro de Mantenimiento Paso 2<a class="headerclose"><i class="fa fa-times pull-right"></i></a> <a class="headerrefresh"><i class="fa fa-refresh pull-right"></i></a> <a class="headershrink"><i class="fa fa-chevron-down pull-right"></i></a></div>
 
-<?php $rs = pg_query($link,"select nombre from planmaes where id_planmaes = ".$_SESSION['master']['id']); $rs = pg_fetch_array($rs); $maestro = $rs[0]; ?>
+<?php $rs = pg_query($link, $link,"select nombre from planmaes where id_planmaes = ".$_SESSION['master']['id']); $rs = pg_fetch_array($rs); $maestro = $rs[0]; ?>
 <div class="form-group"><label>Plan Maestro</label>
 <input id="ma" name="ma" type="text" placeholder="Nombre del Plan de Maestro" class="form-control" maxlength="250" value="<?php echo $maestro;?>" readonly="readonly"/></div>
 
@@ -356,7 +356,7 @@ if(isset($_SESSION['ptc'])){ ?>
 		</tr>
 	</thead>
 	<tbody>
-<?php $rs = pg_query($link,"select id_planmant, descripcion, valor, tiempo, porc_tol from planmant where id_planmaes = ".$_SESSION['master']['id']." order by valor asc "); 
+<?php $rs = pg_query($link, $link,"select id_planmant, descripcion, valor, tiempo, porc_tol from planmant where id_planmaes = ".$_SESSION['master']['id']." order by valor asc "); 
 $r = pg_num_rows($rs);
 if($r==false || $r<1){ ?>
 <tr><td colspan="6">Recuerde Que Debe Agregar Planes de Mantenimiento 
@@ -721,18 +721,18 @@ function calcula_porcentaje(porc, tmp){
 
 <?php  // PROBLEMAS PARA CARGAR CON EL $.GET  RESOLVER MAS ADELANTE
 $provs = "<option value='0' selected>Seleccione un Proveedor</option>";
-$rs = pg_query($link,"select id_provserv, rif, nombre_prov from provserv where id_cliente = ".$_SESSION['master']['cli']." order by rif asc ");
+$rs = pg_query($link, $link,"select id_provserv, rif, nombre_prov from provserv where id_cliente = ".$_SESSION['master']['cli']." order by rif asc ");
 $r = pg_num_rows($rs);
 if($r!=false && $r>0) { while($r = pg_fetch_array($rs)){ $provs .= "<option value='".$r[0]."'>".$r[1]." ".$r[2]."</option>"; } 
 } else { $provs = "<option value='0' selected>Lista de Proveedores Vacia</option>"; }
 
 include("../composiciones/composiciones_CompUnid.php");
-$rs=pg_query($link,"select id_composicion, nombre from composiciones where id_dependencia=0 and id_confunid = ".$_SESSION['master']['conf']." order by nombre asc");
+$rs=pg_query($link, $link,"select id_composicion, nombre from composiciones where id_dependencia=0 and id_confunid = ".$_SESSION['master']['conf']." order by nombre asc");
 $html.="<option value='0' selected='selected'>Seleccione Una Composición</option>";
 $r = pg_num_rows($rs);
 if($r!=false && $r>0){ 
 while($r = pg_fetch_array($rs)){
-$qs = pg_query($link,"select count(id_composicion) from composiciones where id_dependencia = ".$r[0]); $qs = pg_fetch_array($qs); 
+$qs = pg_query($link, $link,"select count(id_composicion) from composiciones where id_dependencia = ".$r[0]); $qs = pg_fetch_array($qs); 
 if($comp[0][$i]==$r[0]) $aux=' selected '; else $aux="";
 if($qs[0]==0){ 
 	$html .= "<option value='".$r[0]."'>".$r[1]."</option>";

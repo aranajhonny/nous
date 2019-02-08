@@ -35,9 +35,9 @@ if(empty($cli)){ $_SESSION['mensaje1']="Debe Seleccionar un Cliente";
 
 $sql="insert into planmaes(nombre, estatus, id_cliente, id_confunid, id_responsable, id_tipo_sensor, id_unidad_medida, id_modelo, porc_tol, valor_prom, id_provserv) values('$nom','Activo', $cli, $conf, $res, $sensor, $unidmed, $mod, $porc, $prom, $prov)";
 
-	$rs = pg_query($sql);
+	$rs = pg_query($link, $sql);
 	if($rs){ 
-		$rs = pg_query("select max(id_planmaes) from planmaes");
+		$rs = pg_query($link, "select max(id_planmaes) from planmaes");
 		$rs = pg_fetch_array($rs);
 		$_SESSION['master']['id'] = $rs[0];
 		$_SESSION['master']['cli'] = $cli;
@@ -155,7 +155,7 @@ if(isset($_SESSION['ptc'])){ ?>
 <div class="form-group"><label>Tipo de Sensor</label>
 <div><select id="sensor" name="sensor" class="selectpicker" onchange="bloquear();">
 <option value="0" selected="selected">Seleccione un Tipo de Sensor</option>
-<?php $rs=pg_query("select id_tipo_sensor, descripcion, unidmed.id_unidmed, magnitudes.nombre, unidmed.nombre from tipo_sensores, magnitudes, unidmed  
+<?php $rs=pg_query($link, "select id_tipo_sensor, descripcion, unidmed.id_unidmed, magnitudes.nombre, unidmed.nombre from tipo_sensores, magnitudes, unidmed  
 where  tipo_sensores.id_unidmed = unidmed.id_unidmed and
 magnitudes.id_magnitud = unidmed.id_magnitud 
 order by descripcion asc ");

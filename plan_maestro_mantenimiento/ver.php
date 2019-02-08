@@ -10,7 +10,7 @@ include("../complementos/permisos.php");
 if(isset($_REQUEST['master'])){ $_SESSION['master']=$_REQUEST['master']; }
 
 if(isset($_SESSION['master'])){
-$rs = pg_query($link,"select * from planmaes, clientes where planmaes.id_cliente = clientes.id_cliente and id_planmaes = ".$_SESSION['master']);
+$rs = pg_query($link, $link,"select * from planmaes, clientes where planmaes.id_cliente = clientes.id_cliente and id_planmaes = ".$_SESSION['master']);
 $rs = pg_fetch_array($rs);
 
 $des = $rs[1];
@@ -25,29 +25,29 @@ $porc = $rs[9];
 $prom = $rs[10];
 $prov = $rs[11];
 
-$rs = pg_query($link,"select rif, razon_social from clientes where id_cliente = $cli");
+$rs = pg_query($link, $link,"select rif, razon_social from clientes where id_cliente = $cli");
 $rs = pg_fetch_array($rs); $cli = $rs[0]." ".$rs[1];
 
-$rs = pg_query($link,"select codigo_principal from confunid where id_confunid = $conf");
+$rs = pg_query($link, $link,"select codigo_principal from confunid where id_confunid = $conf");
 $rs = pg_fetch_array($rs); $conf = $rs[0];
 
-$rs = pg_query($link,"select ci, nombre from personal where id_personal = $res");
+$rs = pg_query($link, $link,"select ci, nombre from personal where id_personal = $res");
 $rs = pg_fetch_array($rs); $res = $rs[0]." ".$rs[1];
 
 if($sensor==0){ $sensor="- -"; } else { 
-$rs = pg_query($link,"select descripcion, nombre from tipo_sensores where id_tipo_sensor = $sensor");
+$rs = pg_query($link, $link,"select descripcion, nombre from tipo_sensores where id_tipo_sensor = $sensor");
 $rs = pg_fetch_array($rs); $sensor = $rs[0]." ".$rs[1]; }
 
 if($unidmed==0){ $unidmed="- -"; } else { 
-$rs = pg_query($link,"select magnitudes.nombre, unidmed.nombre from magnitudes, unidmed where unidmed.id_magnitud = magnitudes.id_magnitud and  id_unidmed = $unidmed");
+$rs = pg_query($link, $link,"select magnitudes.nombre, unidmed.nombre from magnitudes, unidmed where unidmed.id_magnitud = magnitudes.id_magnitud and  id_unidmed = $unidmed");
 $rs = pg_fetch_array($rs); $unidmed = $rs[0]." ".$rs[1]; }
 
 if($mod==0){ $mod="- -"; } else { 
-$rs = pg_query($link,"select marcas.descripcion, modelos.descripcion from marcas, modelos where modelos.id_marca = marcas.id_marca and id_modelo = $mod");
+$rs = pg_query($link, $link,"select marcas.descripcion, modelos.descripcion from marcas, modelos where modelos.id_marca = marcas.id_marca and id_modelo = $mod");
 $rs = pg_fetch_array($rs); $mod = $rs[0]." - ".$rs[1]; }
 
 if($prov==0){ $prov="- -"; } else { 
-$rs = pg_query($link,"select rif, nombre_prov from provserv where id_provserv = $prov");
+$rs = pg_query($link, $link,"select rif, nombre_prov from provserv where id_provserv = $prov");
 $rs = pg_fetch_array($rs); $prov = $rs[0]." ".$rs[1]; }
 
 

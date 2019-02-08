@@ -73,7 +73,7 @@ unset($_SESSION['master']);
 	</tr>
 	</thead>
 	<tbody>
-<?php $rs = pg_query($link,"select id_planmaes, rif, razon_social, nombre from planmaes, clientes where planmaes.id_cliente = clientes.id_cliente order by rif, nombre asc "); 
+<?php $rs = pg_query($link, $link,"select id_planmaes, rif, razon_social, nombre from planmaes, clientes where planmaes.id_cliente = clientes.id_cliente order by rif, nombre asc "); 
 $r = pg_num_rows($rs);
 if($r!=false && $r>0){ $i=1; while($r = pg_fetch_array($rs)){ ?>    
 <tr>
