@@ -12,13 +12,13 @@ Auditoria("Accedio Al Modulo de Asignar Plan de Mantenimiento a Unidades Listado
 if(isset($_REQUEST['remove'])){  
 	$id = $_REQUEST['remove'];
 	
-	$rs = pg_query("select descripcion, confunid.codigo_principal, unidades.codigo_principal 
+	$rs = pg_query($link, "select descripcion, confunid.codigo_principal, unidades.codigo_principal 
 from unidades, confunid, planmant, planmant_unidades where planmant_unidades.id_planmant =  planmant.id_planmant and planmant_unidades.id_unidad = unidades.id_unidad and unidades.id_confunid = confunid.id_confunid and id_planmant_unidad =");
 	$rs = pg_fetch_array($rs);
 	$plan = $rs[0];
 	$unid = $rs[1]." ".$rs[2];
 	
-	$rs = pg_query("delete from planmant_unidades where id_planmant_unidad = $id");
+	$rs = pg_query($link, "delete from planmant_unidades where id_planmant_unidad = $id");
 	if($rs){ 
 		$_SESSION['mensaje3']="plan de mantenimiento removido de la unidad";
 		Auditoria("Plan de Mantenimiento: $plan Removido de la Unidad: $unid",$id); 
@@ -122,7 +122,7 @@ $z=filtrar_campo('int', 6, $_SESSION['miss'][1]);
 $t=filtrar_campo('int', 6, $_SESSION['miss'][2]);
 $c=filtrar_campo('int', 6, $_SESSION['miss'][3]);
 
-$rs = pg_query("select id_planmant_unidad, unidades.codigo_principal, planmant.descripcion, confunid.codigo_principal, areas.descripcion,
+$rs = pg_query($link, "select id_planmant_unidad, unidades.codigo_principal, planmant.descripcion, confunid.codigo_principal, areas.descripcion,
 zongeo.nombre, ci, personal.nombre  
 from planmant_unidades, unidades, planmant, confunid, areas, zongeo, personal 
 where 

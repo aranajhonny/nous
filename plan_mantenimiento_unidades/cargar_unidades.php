@@ -70,18 +70,18 @@ if($plan!=0){ // programacion ciclica
 $unids = array();
 
 if(empty($maestro)) { $detalle_maestro=""; } else { 
-$rs = pg_query("select nombre from planmaes where id_planmaes = $maestro");
+$rs = pg_query($link, "select nombre from planmaes where id_planmaes = $maestro");
 $rs = pg_fetch_array($rs); 
 $detalle_maestro = " Segun Plan Maestro de Mantenimiento: ".$rs[0]; }
-$rs = pg_query("select nombre from planmant where id_planamant = $plan");
+$rs = pg_query($link, "select nombre from planmant where id_planamant = $plan");
 $rs = pg_fetch_array($rs); $detalle_plan = $rs[0];
 
 
 for($i=0; $i<count($_SESSION['asigplan']); $i++){ 
 
-$rs = pg_query("insert into planmant_unidades ( id_planmant, id_unidad, fecha_ultimo_mant, id_planmaes, valor_inicial, valor_actual, valor_ult_mant ) values ($plan, ".$_SESSION['asigplan'][$i][0].", '".date("Y-m-d")."', $maestro, ".$_SESSION['asigplan'][$i][2].", ".$_SESSION['asigplan'][$i][2].", ".$_SESSION['asigplan'][$i][3].")");
+$rs = pg_query($link, "insert into planmant_unidades ( id_planmant, id_unidad, fecha_ultimo_mant, id_planmaes, valor_inicial, valor_actual, valor_ult_mant ) values ($plan, ".$_SESSION['asigplan'][$i][0].", '".date("Y-m-d")."', $maestro, ".$_SESSION['asigplan'][$i][2].", ".$_SESSION['asigplan'][$i][2].", ".$_SESSION['asigplan'][$i][3].")");
 
-$rs = pg_query("select max(id_planmant_unidad) from planmant_unidades ");
+$rs = pg_query($link, "select max(id_planmant_unidad) from planmant_unidades ");
 $rs = pg_fetch_array($rs);
 $unids[$i] = $rs[0];
 
@@ -89,22 +89,22 @@ Auditoria("En Plan de Mantenimiento - Unidades se Asigno El Mantenimiento: $deta
 
 }// REGISTRAR PLAN MANT UNIDAD
 
-$rs = pg_query("select tiempo from planmant where id_planmant = $plan");
+$rs = pg_query($link, "select tiempo from planmant where id_planmant = $plan");
 $rs = pg_fetch_array($rs);
 $dias = $rs[0];  $ini = date2($fi); $fin = date2($ff);
 $sig = true; 
 	while($sig==true){ // mientras fecha	
 for($i=0; $i<count($unids); $i++){	// registrando programacion del dia	
 
-pg_query("insert into progmant(id_planmantunid, fr, estatus) values (".$unids[$i].", '".$ini."', 'Programado')"); 
+pg_query($link, "insert into progmant(id_planmantunid, fr, estatus) values (".$unids[$i].", '".$ini."', 'Programado')"); 
 
-$rs = pg_query("select max(id_progmant) from progmant ");
+$rs = pg_query($link, "select max(id_progmant) from progmant ");
 $rs = pg_fetch_array($rs);
 Auditoria("En Plan de Mantenimiento - Unidades se Genero La Programación del Mantenimiento    Plan: $detalle_plan    Fecha: ".date1($ini)."    Unidad: ".$_SESSION['asigplan'][$i][1]."  $detalle_maestro",$rs[0]);
 
 }
 
-$rs = pg_query($link,"select extract(days from ('$ini'::date + interval '$dias day' - timestamp '$fin')), ('$ini'::date + interval '$dias day')::timestamp::date"); 
+$rs = pg_query($link, $link,"select extract(days from ('$ini'::date + interval '$dias day' - timestamp '$fin')), ('$ini'::date + interval '$dias day')::timestamp::date"); 
 $rs = pg_fetch_array($rs);
 if($rs[0]<1){ $sig=true; $ini = $rs[1]; } else { $sig=false; }
  } // fin mientras
@@ -119,7 +119,7 @@ if($rs[0]<1){ $sig=true; $ini = $rs[1]; } else { $sig=false; }
 // REGISTRAR PLAN MANT UNIDAD
 $unids = array(); 
 $plans = array();
-$rs = pg_query("select id_planmant, descripcion from planmant where id_planmaes = $maestro order by valor asc");
+$rs = pg_query($link, "select id_planmant, descripcion from planmant where id_planmaes = $maestro order by valor asc");
 $r = pg_num_rows($rs);
 if($r!=false && $r>0){ $i=0; while($r=pg_fetch_array($rs)){ 
 	$plans[$i] = $r[0]; 
@@ -129,16 +129,16 @@ if($r!=false && $r>0){ $i=0; while($r=pg_fetch_array($rs)){
 
 
 if(empty($maestro)) { $detalle_maestro=""; } else { 
-$rs = pg_query("select nombre from planmaes where id_planmaes = $maestro");
+$rs = pg_query($link, "select nombre from planmaes where id_planmaes = $maestro");
 $rs = pg_fetch_array($rs); 
 $detalle_maestro = " Segun Plan Maestro de Mantenimiento: ".$rs[0]; }
 
 $t=0;
 for($i=0; $i<count($_SESSION['asigplan']); $i++){
 	for($j=0; $j<count($plans); $j++){ 
-		$rs = pg_query("insert into planmant_unidades ( id_planmant, id_unidad, fecha_ultimo_mant, id_planmaes, valor_inicial, valor_actual , valor_ult_mant) values (".$plans[$j].", ".$_SESSION['asigplan'][$i][0].", '".date("Y-m-d")."', $maestro, ".$_SESSION['asigplan'][$i][2].", ".$_SESSION['asigplan'][$i][2].", ".$_SESSION['asigplan'][$i][3].")");
+		$rs = pg_query($link, "insert into planmant_unidades ( id_planmant, id_unidad, fecha_ultimo_mant, id_planmaes, valor_inicial, valor_actual , valor_ult_mant) values (".$plans[$j].", ".$_SESSION['asigplan'][$i][0].", '".date("Y-m-d")."', $maestro, ".$_SESSION['asigplan'][$i][2].", ".$_SESSION['asigplan'][$i][2].", ".$_SESSION['asigplan'][$i][3].")");
 		
-		$rs = pg_query("select max(id_planmant_unidad) from planmant_unidades ");
+		$rs = pg_query($link, "select max(id_planmant_unidad) from planmant_unidades ");
 		$rs = pg_fetch_array($rs);
 		$unids[$t] = $rs[0];
 		
@@ -149,14 +149,14 @@ Auditoria("En Plan de Mantenimiento - Unidades se Asigno El Mantenimiento: ".$de
 }// REGISTRAR PLAN MANT UNIDAD
 
 for($i=0; $i<count($unids); $i++){ // mientras planes asignados
-$qs = pg_query("select valor_actual, valor, ( valor_prom / 30), ( valor - valor_actual ) from planmant_unidades, planmant, unidades where id_planmant_unidad = ".$unids[$i]." and planmant_unidades.id_unidad = unidades.id_unidad and planmant_unidades.id_planmant = planmant.id_planmant");	$qs=pg_fetch_array($qs);
+$qs = pg_query($link, "select valor_actual, valor, ( valor_prom / 30), ( valor - valor_actual ) from planmant_unidades, planmant, unidades where id_planmant_unidad = ".$unids[$i]." and planmant_unidades.id_unidad = unidades.id_unidad and planmant_unidades.id_planmant = planmant.id_planmant");	$qs=pg_fetch_array($qs);
 if($qs[0] < $qs[1]){ // si valor actual menor a valor del plan
 	$dias = (1*$qs[3])/$qs[2];
-	$qs = pg_query("select ('".date('Y-m-d')."'::date + interval '$dias day')::timestamp::date"); $qs=pg_fetch_array($qs);
+	$qs = pg_query($link, "select ('".date('Y-m-d')."'::date + interval '$dias day')::timestamp::date"); $qs=pg_fetch_array($qs);
 	$sql = "insert into progmant(id_planmantunid, fr, estatus) values (".$unids[$i].", '".$qs[0]."', 'Programado')";
-	pg_query($sql);
+	pg_query($link, $sql);
 	
-$rs = pg_query("select max(id_progmant) from progmant ");
+$rs = pg_query($link, "select max(id_progmant) from progmant ");
 $rs = pg_fetch_array($rs);
 Auditoria("En Plan de Mantenimiento - Unidades se Genero La Programación del Mantenimiento Plan: $detalle_plan    Fecha: ".date1($qs[0])."    Unidad: ".$_SESSION['asigplan'][$i][1]."  $detalle_maestro",$rs[0]);
 	
@@ -196,7 +196,7 @@ $sql="select id_unidad, confunid.codigo_principal, unidades.codigo_principal fro
 ( id_area = $area or $area = 0 ) and 
 unidades.id_cliente = $cli 
 order by confunid.codigo_principal, unidades.codigo_principal asc ";
-$rs = pg_query($link, $sql); 
+$rs = pg_query($link, $link, $sql); 
 $r = pg_num_rows($rs); 
 if($r!=false && $r>0){ $i=0; 
 while($r = pg_fetch_array($rs)){
