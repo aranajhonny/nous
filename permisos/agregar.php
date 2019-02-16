@@ -521,6 +521,7 @@ function dependencia_tipo(){
 		}
 	);
 }
+	dependencia_tipo();
 </script>
 
 <script src="../Legend/admin/assets/icheck/js/jquery.icheck.min.js"></script>
