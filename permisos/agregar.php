@@ -4,170 +4,137 @@ include("../complementos/condb.php");
 include_once("../complementos/auditoria.php");
 include("../complementos/util.php");
 
-$_SESSION['acc']['mod'] = 37;
-$_SESSION['acc']['form'] = 90;
+$_SESSION['acc']['mod'] = 15;
+$_SESSION['acc']['form'] = 18;
 include("../complementos/permisos.php");
 
-
-
 if(isset($_POST['guardar'])){ 
-$tipo = filtrar_campo('int', 6, $_POST['tipo']); 
+$cli =  filtrar_campo('int', 6, $_POST['cli']);   
+$zona = filtrar_campo('int', 6, $_POST['zona']); 
+$area = filtrar_campo('int', 6, $_POST['area']); 
+$disp = filtrar_campo('int', 6, $_POST['disp']); 
+$obs  = filtrar_campo('todo', 0, $_POST['obs']);   
+$resp = filtrar_campo('int', 6, $_POST['resp']);
+$kmi  = filtrar_campo('num', 10, $_POST['kmi']); 
+$fi   = filtrar_campo('date', 10, $_POST['fi']);
+$tmp  = "false"; 
+$prop = "";
+$unid = 0;  
+$conf1 = filtrar_campo('todo', 60, $_POST['conf1']); 
+$cod   = filtrar_campo('todo', 20, $_POST['cod']);
+$conf2 = filtrar_campo('todo', 60, $_POST['conf2']);  
+$conf3 = filtrar_campo('todo', 60, $_POST['conf3']);  
+$conf4 = filtrar_campo('todo', 60, $_POST['conf4']);
 
-$cli = filtrar_campo('int', 6, $_POST['cli']); 
-$unid = filtrar_campo('cadena', 120, $_POST['unid']);
-$res = filtrar_campo('int', 6, $_POST['res']);   
-$ser = filtrar_campo('todo', 120, $_POST['ser']); //$est = $_POST['est'];
-$fe = filtrar_campo('date', 10, $_POST['fe']); 
-$fv = filtrar_campo('date', 10, $_POST['fv']); 
-$recargar=true; 
-$cant_doc = filtrar_campo('int', 6, $_POST['cant_doc']);
+$conf = explode(":::", filtrar_campo('cadena', 120, $_POST['conf'])); 
 
-if(isset( $_POST['imagen']) && strcmp( $_POST['imagen'],"on")==0){ 
-$img = $_POST['imagen']; $tmp="true"; } else { $img = ""; $tmp="false"; } 
+if(empty($disp)) $disp=0;
+if(empty($kmi)) $kmi=0;
 
-if(empty($fv)){ $tmp2 = "NULL"; } else { $tmp2 = date2($fv); }
+if(empty($cli)){ $_SESSION['mensaje1']="Debe seleccionar un cliente";
+} else if(empty($zona)){ $_SESSION['mensaje1']="Debe seleccionar la zona";
+} else if(empty($area)){ $_SESSION['mensaje1']="Debe seleccionar el área";
+} else if(empty($conf)){$_SESSION['mensaje1']="Debe seleccionar la configración de la unidad";
+} else if(empty($cod)){ $_SESSION['mensaje1']="Debe indicar el Código Principal";
+} else if(empty($conf1)){ $_SESSION['mensaje1']="Debe indicar la Primera Caracteristica";
+} else if(empty($conf2)){ $_SESSION['mensaje1']="Debe indicar la Segunda Caracteristica";
+} else if(empty($fi)){ $_SESSION['mensaje1']="Debe seleccionar La Fecha de Instalaciòn";
+} else if(empty($resp)){ $_SESSION['mensaje1']="Debe seleccionar un responsable";
+} else if(in_array(75,$_SESSION['acl'])==false){$_SESSION['mensaje1']= "no posee permiso para guardar este registro";
+} else { // si validar
+$conf = $conf[0];
 
-if(empty($tipo)){ $_SESSION['mensaje1']="Debe seleccionar el tipo de permiso";
-} else if(empty($cli)){ $_SESSION['mensaje1']="Debe seleccionar el cliente";
-} else if(empty($unid)){ $_SESSION['mensaje1']="Debe seleccionar la unidad";
-} else if(empty($res)){ $_SESSION['mensaje1']="Debe seleccionar el responsable";
-} else if(empty($ser)){ $_SESSION['mensaje1']="Debe indicar el serial";
-} else if(empty($fe)){ $_SESSION['mensaje1']="Debe seleccionar la fecha de expedición";
-//} else if(empty($fv)){ $_SESSION['mensaje1']="Debe seleccionar la fecha de vencimiento";
-//} else if(empty($est)){ $_SESSION['mensaje1']="Debe seleccionar el estatus del permiso";
-} else if(in_array(93,$_SESSION['acl'])==false){$_SESSION['mensaje1']= "no posee permiso para guardar este registro";
-} else { // si validar 
+$f1 = Preparar_Imagen($_FILES['foto1']); 
+$f2 = Preparar_Imagen($_FILES['foto2']);
+$f3 = Preparar_Imagen($_FILES['foto3']); 
+$f4 = Preparar_Imagen($_FILES['foto4']);
+$f5 = Preparar_Imagen($_FILES['foto5']); 
+$f6 = Preparar_Imagen($_FILES['foto6']);
 
-list($unid, $area, $zona) = explode(":::",$unid);
-$unid = filtrar_campo('int', 6, $unid);
-$area = filtrar_campo('int', 6, $area);
-$zona = filtrar_campo('int', 6, $zona);
-
-$fotos = array();
-for ($i=0; $i<$cant_doc; $i++){ 
-	$fotos[$i][0] = Preparar_Imagen($_FILES["foto$i"]);
-	$fotos[$i][1] = filtrar_campo('todo', 120, $_POST["des$i"]);
-} 
 if(isset($_SESSION['mensaje1'])==false)
 
 
 { // si validar 2
-if(strcmp($tmp2,"NULL")==0){ 
-	$est=9;
-} else { 
-   $actual = date("Y-m-d");
-$rs = pg_query($link, filtrar_sql("select '$tmp2'::date < '$actual'::date, '$actual'::date >= ('$tmp2'::date - (dias_gestion * interval '1 day'))::date from tipo_permisos where id_tipo_permiso = $tipo"));
 
-   $r = pg_fetch_array($rs);
-   if(strcmp($r[0],"f")==0){ //si fv menor a actual :: vigente o tramitando
-	  if(strcmp($r[1],"t")==0) $est = 10;
-	  else $est = 9;	
-   } else { 
-		$est=11;
-   }
-}
-	// EXCEPCION EN ESTUDIO DE SI ES BENEFICIOSO 
-	$rs = pg_query($link, filtrar_sql("select id_clasperm from tipo_permisos where id_tipo_permiso = $tipo"));
-	$rs = pg_fetch_array($rs);
-	$clas = $rs[0];
-	
-	$rs = pg_query($link, filtrar_sql("insert into permisos(id_tipo_permiso, id_cliente, id_unidad, id_responsable_especifico, serial, fecha_expedicion, fecha_vencimiento, is_imagen, id_area, id_zona, id_estatus, id_clasperm) values ($tipo, $cli, $unid, $res, '$ser', '".date2($fe)."', '$tmp2', $tmp, $area, $zona, $est, $clas)"));
+	$rs = pg_query($link, filtrar_sql("insert into unidades(id_cliente, id_zona, id_area,  id_dispositivo, id_confunid, id_tipo_unidad, codigo_principal, n_configuracion1, n_configuracion2, n_configuracion3, n_configuracion4, propietario, is_principal, ult_posicion, estatus_control, obs, ult_act, id_responsable, id_unidpri, km_ini, km_acum, hr_acum, fecha_instalacion) values ($cli, $zona, $area, $disp, $conf, $unid, '$cod', '$conf1', '$conf2', '$conf3', '$conf4', '', $tmp, null, 'Estable', '$obs', '".date('Y-m-d')."', $resp, 0, $kmi, $kmi, 0, '".date2($fi)."')"));
 	if($rs){ 
-		$rs = pg_query($link, filtrar_sql("select max(id_permiso) from permisos")); 
-		$rs = pg_fetch_array($rs); 
-		$id=$rs[0];
-		
-Auditoria("Agrego Permiso: $ser",$rs[0]);
-//================================ REQUISITOS =======================================
-$n = count($_SESSION['tmp_req']); $sql2="";
-for($i=0; $i<$n; $i++){ 
-	//$_SESSION['tmp_req'][$i][2] = $_POST['ids_'.$_SESSION['tmp_req'][$i][0]];
-if(isset($_POST['ids_'.$_SESSION['tmp_req'][$i][0]])){ 
-$sql2.="($id, ".$_SESSION['tmp_req'][$i][0].",".selecciono($_SESSION['tmp_req'][$i][2])."),";
-} else { 
-$sql2.="($id, ".$_SESSION['tmp_req'][$i][0].",false),";
-}
-}
-if(empty($sql2)==false){ 
-$rs = pg_query($link, filtrar_sql("insert into reqperm(id_permiso, id_reqtipperm, is_doc) values ".substr($sql2,0,(strlen($sql2)-1)).";"));
-if($rs==false) {
-			$_SESSION['mensaje1']="No se Logro Registrar Los Requisitos";
-			 Auditoria("Problema al registrar Los Requisitos del Permiso Error: ".pg_last_error($link),$id);
-}
-unset($sql2);
-}
-//===================================================================================	
-//============================== ARCHIVOS ===========================================
-for ($i=0; $i<$cant_doc; $i++){
-	if(empty($fotos[$i][0])==false){ // SI ARCHIVO VACIO
-		
-		$fotos[$i][1] = filtrar_campo('todo', 120, $fotos[$i][1]);
-		$fotos[$i][0]['name'] = filtrar_campo('todo', 250, $fotos[$i][0]['name']);
-		$fotos[$i][0]['ext']  = filtrar_campo('todo', 250, $fotos[$i][0]['ext']);
-		
-		$rs = pg_query($link, "insert into permimg(id_permiso, descripcion, archivo, extension, nombre) values ($id, '".$fotos[$i][1]."', '".$fotos[$i][0]['archivo']."', '".$fotos[$i][0]['ext']."', '".$fotos[$i][0]['name']."')");
-		if($rs==false) {
-			$_SESSION['mensaje1']="No se Logro Registrar El Archivo";
-			 Auditoria("Problema al registrar el Archivo del Permiso Error: ".pg_last_error($link),$id);
-		}
-	}
-}
+$rs = pg_query($link, filtrar_sql("select max(id_unidad) from unidades"));
+$rs = pg_fetch_array($rs);
+$id = $rs[0];
+Auditoria("Agrego Unidades: $cod",$id);
+//============================== FOTOS ==============================================
+if(empty($f1)==false){ // SI ARCHIVO VACIO
+$rs = pg_query($link, filtrar_sql($link,"insert into unidimg(id_unidad, descripcion, archivo, extension) values ($id, '".$_POST['des1']."', '".$f1['archivo']."', '".$f1['ext']."')"));
+if($rs==false) { $_SESSION['mensaje1']="No se Logro Registrar La Foto"; } } 
+
+if(empty($f2)==false){ // SI ARCHIVO VACIO
+$rs = pg_query($link, filtrar_sql($link,"insert into unidimg(id_unidad, descripcion, archivo, extension) values ($id, '".$_POST['des2']."', '".$f2['archivo']."', '".$f2['ext']."')"));
+if($rs==false) { $_SESSION['mensaje1']="No se Logro Registrar La Foto"; } } 
+
+if(empty($f3)==false){ // SI ARCHIVO VACIO
+$rs = pg_query($link, filtrar_sql($link,"insert into unidimg(id_unidad, descripcion, archivo, extension) values ($id, '".$_POST['des3']."', '".$f3['archivo']."', '".$f3['ext']."')"));
+if($rs==false) { $_SESSION['mensaje1']="No se Logro Registrar La Foto"; } } 
+
+if(empty($f4)==false){ // SI ARCHIVO VACIO
+$rs = pg_query($link, filtrar_sql($link,"insert into unidimg(id_unidad, descripcion, archivo, extension) values ($id, '".$_POST['des4']."', '".$f4['archivo']."', '".$f4['ext']."')"));
+if($rs==false) { $_SESSION['mensaje1']="No se Logro Registrar La Foto"; } } 
+
+if(empty($f5)==false){ // SI ARCHIVO VACIO
+$rs = pg_query($link, filtrar_sql($link,"insert into unidimg(id_unidad, descripcion, archivo, extension) values ($id, '".$_POST['des5']."', '".$f5['archivo']."', '".$f5['ext']."')"));
+if($rs==false) { $_SESSION['mensaje1']="No se Logro Registrar La Foto"; } } 
+
+if(empty($f6)==false){ // SI ARCHIVO VACIO
+$rs = pg_query($link, filtrar_sql($link,"insert into unidimg(id_unidad, descripcion, archivo, extension) values ($id, '".$_POST['des6']."', '".$f6['archivo']."', '".$f6['ext']."')"));
+if($rs==false) { $_SESSION['mensaje1']="No se Logro Registrar La Foto"; } } 
 //===================================================================================
-		$_SESSION['mensaje3']="Permiso Agregado";
+		$_SESSION['mensaje3']="Unidad Agregada";
 		header("location: listado.php");
 		exit();
-		$ser = $cli = $unid = $res = $est = $fv = $fe = $tipo = $area = $zona = "";
-		$clas = "";
-		$img = "on";
-		unset($_SESSION['tmp_req']);
 	} else { 
-		$_SESSION['mensaje1']="No se logro agregar el permiso";
-		Auditoria("Problema al registrar El Permiso Error: ".pg_last_error($link),0);
+		$_SESSION['mensaje1']="No se logro agregar la unidad";
+		Auditoria("Problema al registrar La Unidad Error: ".pg_last_error($link),0);
 	}
-
 
 } // si validar 2
 } // si validar
 } else { 
-	$clas = $ser = $est = $fv = $fe =  "";
-	$area = $zona = $tipo = $cli = $res = $unid = 0;
-	$img = "on";
-	unset($_SESSION['tmp_req']);
-	$recargar=false;
-	
-	Auditoria("Accedio Al Modulo Agregar Permiso",0);
+	$cod = $prop = $conf1 = $conf2 = $conf3 = $conf4 = $obs = "";
+	$des1 = $des2 = $des3 = $des4 = $des5 = $des6 = ""; 
+	$prin = $cli = $area = $zona = $resp = $disp = $conf = 0;
+	$fi = date('d/m/Y');
+	$kmi = 0;
+Auditoria("Accedio Al Modulo Agregar Unidades",0);
 }
 
-function selecciono($op){ 
-	if(strcmp($op,"off")==0) return 'true'; 
-	else return 'false';
-}
+
+
 
 function Preparar_Imagen($file){ 
 	if(empty($file['tmp_name'])){  // SI ARCHIVO VACIO
 		$tmp = "";
 	} else { 
-//$tipos = array("image/gif","image/jpeg","image/bmp","image/png","image/tiff");
+$tipos = array("image/gif","image/jpeg","image/bmp","image/png","image/tiff");
 $maximo = 15728640; //15Mb
 if (is_uploaded_file($file['tmp_name'])){ // Se ha cargado el archivo
-//if (in_array($file['type'],$tipos)){ // si tipo de archivo valido
+if (in_array($file['type'],$tipos)){ // si tipo de archivo valido
 if ($file['size'] <= $maximo){ // si tamaño del archivo correcto
 $fp = fopen($file['tmp_name'], 'r'); //Abrimos el archivo
 $imagen = fread($fp, filesize($file['tmp_name'])); //Extraemos el contenido del archivo
 //$imagen = addslashes($imagen); // NO FUNCIONA PARA POSTGRES ALTERA LA CADENA DE BYTES
 fclose($fp); //Cerramos el archivo
-$tmp['name'] = $file['name'];
-$tmp['ext']  = $file['type'];
+
+$tmp['name'] = filtrar_campo('todo', 120, $file['name']);
+$tmp['ext']  = filtrar_campo('todo', 250, $file['type']);
 $tmp['archivo'] = pg_escape_bytea($imagen);
-} else { $tmp="";
-$_SESSION['mensaje1'] = "Tamaño del Archivo (".$file['name'].") No puede ser mayor a 15Mb"; }
-//} else { $tmp="";
-//$_SESSION['mensaje'] = "El Formato del Archivo no es Correcto"; }
-} else { $tmp="";
-$_SESSION['mensaje1'] = "El Archivo (".$file['name'].") No ha Sido Cargado"; }
-	}
+
+} else { $tmp=""; $_SESSION['mensaje1'] = "Tamaño del Archivo (".$file['name'].") No puede ser mayor a 15Mb"; }
+} else { $tmp=""; $_SESSION['mensaje1'] = "El Formato del Archivo no es Correcto"; }
+} else { $tmp=""; $_SESSION['mensaje1'] = "El Archivo (".$file['name'].") No ha Sido Cargado"; }
+}
 return $tmp;
 }
+
+
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="../Templates/marco.dwt" codeOutsideHTMLIsLocked="false" -->
@@ -195,12 +162,13 @@ if(isset($_SESSION['ptc'])){ ?>
 
 <?php echo "<link href='../Legend/admin/assets/bootstrap/css/bootstrap.css' rel='stylesheet'/>";?>
 <link href="../Legend/admin/assets/fuelux/css/fuelux.min.css" rel="stylesheet"/>
-<link href="../Legend/admin/assets/select2/css/select2.css" rel="stylesheet"/>
 <link href="../Legend/admin/assets/icheck/skins/square/_all.css" rel="stylesheet"/>
+<link href="../Legend/admin/assets/select2/css/select2.css" rel="stylesheet"/>
 <?php echo "<link href='../Legend/admin/assets/css/styles.css' rel='stylesheet'/>"; ?>
 <link href="../Legend/admin/assets/css/leftmenu.css" rel="stylesheet"/>
 <link href="../Legend/admin/assets/bootstrapui/css/jquery-ui-1.9.2.custom.css" rel="stylesheet"/>
 <script src="../complementos/utilidades.js"></script>
+
 <!-- InstanceEndEditable -->
 </head>
 <body>
@@ -212,8 +180,8 @@ if(isset($_SESSION['ptc'])){ ?>
 <img src="../img/logo.png" height="67" width="454" onclick="location.href='../inicio/principal.php'" /><br/>
 <!-- InstanceBeginEditable name="panelsession" -->
 <ol class="breadcrumb">
-<li><a href="#">Control de Permisos</a></li>
-<li><a href="#">Permisos</a></li>
+<li><a href="#">Unidades</a></li>
+<li><a href="#">Unidades</a></li>
 <li><a href="#">Agregar</a></li>
 <li class="pull-right"><a href="" class="text-muted"><i class="fa fa-refresh"></i></a></li>
 <li class="pull-right"><?php echo date('d/m/Y');?></li>
@@ -227,111 +195,134 @@ if(isset($_SESSION['ptc'])){ ?>
 
 <div class="well">
 
-<div class="header">Agregar Permiso<a class="headerclose"><i class="fa fa-times pull-right"></i></a> <a class="headerrefresh"><i class="fa fa-refresh pull-right"></i></a> <a class="headershrink"><i class="fa fa-chevron-down pull-right"></i></a></div>
+<div class="header">Agregar Unidad<a class="headerclose"><i class="fa fa-times pull-right"></i></a> <a class="headerrefresh"><i class="fa fa-refresh pull-right"></i></a> <a class="headershrink"><i class="fa fa-chevron-down pull-right"></i></a></div>
 <form name="agregar" method="post" action="agregar.php" onsubmit="return validar();" enctype="multipart/form-data">
 <fieldset>
-
 <div class="fuelux">
 <div id="MyWizard" class="wizard">
 <ul class="steps">
-<li data-target="#step1"  onclick="$('#MyWizard').wizard('selectedItem', { step: 1 });"  class="active">1.- Permiso<span class="chevron"></span></li>
-<li data-target="#step2"  onclick="$('#MyWizard').wizard('selectedItem', { step: 2 });" >2.- Requisitos<span class="chevron"></span></li>
-<li data-target="#step3"  onclick="$('#MyWizard').wizard('selectedItem', { step: 3 });" >3.- Archivos<span class="chevron"></span></li>
+<li data-target="#step1"  onclick="$('#MyWizard').wizard('selectedItem', { step: 1 });"  class="active">1.- Unidad<span class="chevron"></span></li>
+<li data-target="#step2"  onclick="$('#MyWizard').wizard('selectedItem', { step: 2 });" >2.- Fotos<span class="chevron"></span></li>
 </ul>
 </div>
 <div class="step-content">
 <div class="step-pane active" id="step1">
 
 <div class="form-group"><label>Cliente</label>
-<div id="f_cli"></div></div>
+<div id="f_cli"></div>
+</div>
 
-
-
-<div class="form-group"><label>Tipos de Permiso</label>
-<div><select id="tipo" name="tipo" class="selectpicker" onchange="CargarRequisitos('&limpiar=true');CargarDocs();">
-<option value="0" selected="selected">Seleccione un Tipo de Permiso</option>
-<!-- LLENADO POR JAVASCRIPT --> 
+<div class="form-group"><label>Zona Geográfica</label>
+<div><select id="zona" name="zona" class="selectpicker">
+<option value="0" selected="selected">Seleccione una Zona</option>
+<!-- LLENADO POR JAVASCRIPT -->
 </select></div>
 </div>
 
-<div class="form-group"><label>Unidades del Cliente</label>
-<div><select id="unid" name="unid" class="selectpicker" onchange="rellenar();">
-<option value="0" selected="selected">Seleccione una Unidad</option>
-<!-- LLENADO POR JAVASCRIPT -->    
-</select></div></div>
-
-<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6"><label>Área</label>
-<input id="area" name="area" type="text" placeholder="Área a la que Pertenece la Unidad" class="form-control" value="" readonly="readonly" /></div>
-
-<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6"><label>Zona</label>
-<input id="zona" name="zona" type="text" placeholder="Zona a la que Pertenece la Zona" class="form-control" value="" readonly="readonly" /></div>
-
-<div class="form-group"><label>Serial</label>
-<input id="ser" name="ser" type="text" placeholder="Serial, Nro ó Código del Permiso" class="form-control" maxlength="118" value="<?php echo $ser;?>" onkeypress="return permite(event,'todo')" /><p class="help-block">Ejemplo: N# A-001</p></div>
-
-<div class="form-group"><label>Responsable</label>
-<div><select id="res" name="res" class="selectpicker">
-<option value="0" selected="selected">Seleccione un Responsable</option>
-<!-- LLENADO POR JAVASCRIPT -->   
-</select></div></div>
-
-<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
-<label>Fecha de Expedición</label>
-<input id="fe" name="fe" type="text" placeholder="Fecha de Expedición" class="form-control" maxlength="12" value="<?php echo $fe;?>"  /><p class="help-block">Ejemplo: 01/01/2014</p>
+<div class="form-group"><label>Área</label>
+<div><select id="area" name="area" class="selectpicker">
+<option value="0" selected="selected">Seleccione un Área</option>
+<!-- LLENADO POR JAVASCRIPT -->
+</select></div>
 </div>
 
-<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
-<label>Fecha de Vencimiento</label>
-<input id="fv" name="fv" type="text" placeholder="Fecha de Vencimiento" class="form-control" maxlength="12" value="<?php echo $fv;?>"  /><p class="help-block">Ejemplo: 01/01/2014</p></div>
+<div class="form-group"><label>Dispositivo</label>
+<div><select id="disp" name="disp" class="selectpicker">
+<option value="0" selected="selected">Seleccione un Dispositivo</option>
+<!-- LLENADO POR JAVASCRIPT -->
+</select></div>
+</div>
 
-<div class="skin skin-square skin-section checkbox icheck form-group">
-<label for="square-checkbox-2" class="icheck">
-<input tabindex="6" type="checkbox" name="imagen" id="imagen" <?php if(strcmp($img,"on")==0) echo "checked";?> onchange="HabFoto()" /> ¿ Usa Imagenes ?
-</label>
+<div class="form-group"><label>Tipo de Unidad</label>
+<div><select id="conf" name="conf" class="selectpicker" onchange="CargarConfUnid();">
+<option value="0" selected="selected">Seleccione un Tipo de Unidad</option>
+<!-- LLENADO POR JAVASCRIPT -->
+</select></div>
+</div>
+
+<div class="form-group"><label id="eti5"></label>
+<input id="cod" name="cod" type="text" placeholder="Código Principal" class="form-control" maxlength="60" value="<?php echo $cod;?>" onkeyup="mayu(this)" onkeypress="return permite(event, 'todo')"/></div>
+
+<div class="form-group"><label id="eti1"></label>
+<input id="conf1" name="conf1" type="text" placeholder="Primera Caracteristica" class="form-control" maxlength="60" value="<?php echo $conf1;?>" onkeyup="mayu(this)" onkeypress="return permite(event, 'todo')" /></div> 
+
+<div class="form-group"><label id="eti2"></label>
+<input id="conf2" name="conf2" type="text" placeholder="Segunda  Caracteristica" class="form-control" maxlength="60" value="<?php echo $conf2;?>" onkeyup="mayu(this)" onkeypress="return permite(event, 'todo')" /></div> 
+
+<div class="form-group"><label id="eti3"></label>
+<input id="conf3" name="conf3" type="text" placeholder="Tercera  Caracteristica" class="form-control" maxlength="60" value="<?php echo $conf3;?>" onkeyup="mayu(this)" onkeypress="return permite(event, 'todo')" /></div> 
+
+<div class="form-group"><label id="eti4"></label>
+<input id="conf4" name="conf4" type="text" placeholder="Cuarta  Caracteristica" class="form-control" maxlength="60" value="<?php echo $conf4;?>" onkeyup="mayu(this)" onkeypress="return permite(event, 'todo')" /></div>   
+
+<div class='form-group'>
+<div class='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+<label>Km Inicial</label>
+<input id="kmi" name="kmi" type="text" placeholder="Kilometraje Inicial" class="form-control" maxlength="12" value="<?php echo $kmi;?>" onkeypress="return permite(event, 'float')"/>
+</div>
+<div class='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+<label>Fecha de Instalaciòn</label>
+<input id='fi' name='fi' type='text' placeholder='Fecha de Instalaciòn' class='form-control' maxlength='12' value='<?php echo $fi;?>'/>
+</div>  
+<p>&nbsp;</p>    
+</div>
+
+<div class="form-group"><label>Responsable</label>
+<div><select id="resp" name="resp" class="selectpicker">
+<option value="0" selected="selected">Seleccione un Responsable</option>
+    <!-- LLENADO POR JAVASCRIPT -->
+</select></div>
+</div>
+
+<div class="form-group"><label>Observaciones</label>
+<textarea rows="8" name="obs" id="obs" onkeypress="return permite(event, 'todo')" class="form-control"><?php echo $obs; ?></textarea>
 </div>
 
 </div>
        
                                     
                                               
-<div class="step-pane" id="step2"></div>
-
-
-
-<div class="step-pane" id="step3">
+<div class="step-pane" id="step2">
 <div class="row">
+                            
+		                		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="form-group"><label>1.- Foto</label><input id="foto1" name="foto1" accept="image/*" type="file" class="filestyle" data-classButton="btn btn-default btn-lg" data-input="false"></div>
 
-<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="fotos"></div>
+<div class="form-group"><label>2.- Foto</label><input id="foto2" name="foto2" accept="image/*"  type="file" class="filestyle" data-classButton="btn btn-info btn-lg" data-input="false"></div>
 
-<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="dess"></div>  
+<div class="form-group"><label>3.- Foto</label><input id="foto3" name="foto3" accept="image/*"  type="file" class="filestyle" data-classButton="btn btn-primary btn-lg" data-input="false"></div>
 
-<input type="hidden" name="cant_doc" id="cant_doc" value="0" />                         
+<div class="form-group"><label>4.- Foto</label><input id="foto4" name="foto4" accept="image/*"  type="file" class="filestyle" data-classButton="btn btn-default btn-lg" data-input="false"></div>
+                                    
+<div class="form-group"><label>5.- Foto</label><input id="foto5" name="foto5" accept="image/*"  type="file" class="filestyle" data-classButton="btn btn-info btn-lg" data-input="false"></div>
+
+<div class="form-group"><label>6.- Foto</label><input id="foto6" name="foto6" accept="image/*"  type="file" class="filestyle" data-classButton="btn btn-primary btn-lg" data-input="false"></div>
+
+</div><div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">	      	
+
+<div class="form-group"><label>Descripción</label><input id="des1" name="des1" type="text" placeholder="Breve Descripción de la Foto" class="form-control" maxlength="120" value="<?php echo $des1;?>" onkeypress="return permite(event,'todo')" /></div>
+
+<div class="form-group"><label>Descripción</label><input id="des2" name="des2" type="text" placeholder="Breve Descripción de la Foto" class="form-control" maxlength="120" value="<?php echo $des2;?>" onkeypress="return permite(event,'todo')" /></div>
+
+<div class="form-group"><label>Descripción</label><input id="des3" name="des3" type="text" placeholder="Breve Descripción de la Foto" class="form-control" maxlength="120" value="<?php echo $des3;?>" onkeypress="return permite(event,'todo')" /></div>
+
+<div class="form-group"><label>Descripción</label><input id="des4" name="des4" type="text" placeholder="Breve Descripción de la Foto" class="form-control" maxlength="120" value="<?php echo $des4;?>" onkeypress="return permite(event,'todo')" /></div>
+
+<div class="form-group"><label>Descripción</label><input id="des5" name="des5" type="text" placeholder="Breve Descripción de la Foto" class="form-control" maxlength="120" value="<?php echo $des5;?>" onkeypress="return permite(event,'todo')" /></div>
+
+<div class="form-group"><label>Descripción</label><input id="des6" name="des6" type="text" placeholder="Breve Descripción de la Foto" class="form-control" maxlength="120" value="<?php echo $des6;?>" onkeypress="return permite(event,'todo')" /></div>
+		                		</div>
+                                
+		                	</div>
 </div>
-</div>
-<script>
-var items = 0;
-function agregar_doc(){ 
 
-	$("#fotos").append("<div class='form-group'><label>"+(items+1)+".- Archivo</label><input id='foto"+(items)+"' name='foto"+(items)+"' accept='*' type='file' class='filestyle' data-classButton='btn btn-primary btn-lg' data-input='false'></div>");
-	
-	$("#dess").append("<div class='form-group'><label>Descripción</label><input id='des"+(items)+"' name='des"+(items)+"' type='text' placeholder='Breve Descripción de la Foto' class='form-control' maxlength='120' value='' onkeypress='return permite(event,\"todo\");' /></div>");
-	
-	items++;
-	document.getElementById('cant_doc').value = items; 
-	
-	File_style();
-}
-
-</script>
 
 
 </div>
 <br>
 <button type="button" class="btn btn-default" id="btnWizardPrev">Ant.</button>
 <button type="button" class="btn btn-primary" id="btnWizardNext">Sig.</button>
-</div> 
-
-                            
+</div>                           
 </fieldset>
 <p>&nbsp;</p><p>&nbsp;</p>
 <div class="row">
@@ -339,47 +330,45 @@ function agregar_doc(){
 <input type="button" name="volver" value="Volver" class="btn btn-info btn-block" onclick="location.href='listado.php'"/></div>
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 <input type="submit" name="guardar" value="Guardar" class="btn btn-primary btn-block"/></div></div>
+
 </form>
 </div>
 
 <script>function validar(){ 
 val = false;
-	if(document.getElementById('tipo').value=="0"){ 
-		mensaje("Debe seleccionar un Tipo de Permiso",1);
-	
-	} else if(document.getElementById('cli').value=="0"){ 
-		mensaje("Debe seleccionar un cliente",1);
-	
-	} else if(document.getElementById('unid').value=="0"){ 
-		mensaje("Debe seleccionar una unidad",1);
-	
-	} else if(document.getElementById('res').value=="0"){ 
-		mensaje("Debe seleccionar un responsable",1);
+	if(document.getElementById('cli').value=="0"){ 
+		mensaje("Debe seleccionar el cliente",1);
 		
-	} else if(document.getElementById('ser').value.length<1){ 
-		mensaje("Debe indicar el serial",1);
+	} else if(document.getElementById('zona').value=="0"){ 
+		mensaje("Debe seleccionar la zona geográfica ",1);
 		
-	} else if(document.getElementById('fe').value.length<9){ 
-		mensaje("Debe seleccionar la fecha de expedición",1);
+	} else if(document.getElementById('area').value=="0"){ 
+		mensaje("Debe seleccionar el área",1);
+
+	} else if(document.getElementById('conf').value=="0"){ 
+		mensaje("Debe seleccionar la configuración de la unidad",1);
+		
+	} else if(document.getElementById('cod').value.length<1){ 
+		mensaje("Debe indicar la "+label5,1);
+			
+	} else if(document.getElementById('conf1').value.length<1){ 
+		mensaje("Debe indicar la "+label1,1);
+	
+	} else if(document.getElementById('conf2').value.length<1){ 
+		mensaje("Debe indicar la "+label2,1);
+		
+	} else if(document.getElementById('fi').value=="0"){ 
+		mensaje("Debe seleccionar la fecha de instalaciòn ",1);
+	
+	} else if(document.getElementById('resp').value=="0"){ 
+		mensaje("Debe seleccionar un responsable ",1);
 		
 	} else { 
 		val = true;
 	}
 	
-return val; } 
+return val; }</script>
 
-function rellenar(){ 
-	var texto = document.getElementById('unid').value;
-	if(texto.length<1 || texto=="0"){
-		document.getElementById('area').value="";
-		document.getElementById('zona').value="";
-	} else {
-		var data = texto.split(':::'); 
-		document.getElementById('area').value=data[5];
-		document.getElementById('zona').value=data[6];
-	}
-}
-</script>
 <!-- InstanceEndEditable -->
 </div>
 </div>
@@ -426,49 +415,49 @@ function mensaje(texto, tipo) {
 <script src="../Legend/admin/assets/bootstrapmaxlength/js/bootstrap-maxlength.min.js"></script>
 <script src="../Legend/admin/assets/select2/js/select2.min.js"></script>
 <script>
-$("#ser").maxlength({ alwaysShow: true });
-$("#fv").maxlength({ alwaysShow: true });
-$("#fe").maxlength({ alwaysShow: true });
 
-$("#tipo").select2();
-$("#unid").select2();
-$("#res").select2();
-</script>
-<script src="../jquery/development-bundle/ui/jquery.ui.core.js"></script>
-<script src="../jquery/development-bundle/ui/jquery.ui.widget.js"></script>
-<script src="../jquery/development-bundle/ui/jquery.ui.datepicker.js"></script>
-<link rel="stylesheet" href="../jquery/development-bundle/themes/custom-theme/jquery.ui.datepicker.css"/>
-<script> 
-$(function() {
-	$( "#fv" ).datepicker();
-	$( "#fe" ).datepicker();
-});
-</script>
+//$("#prop").maxlength({ alwaysShow: true });
+$("#conf1").maxlength({ alwaysShow: true });
+$("#conf2").maxlength({ alwaysShow: true });
+$("#conf3").maxlength({ alwaysShow: true });
+$("#conf4").maxlength({ alwaysShow: true });
+$("#cod").maxlength({ alwaysShow: true });
+
+$("#conf").select2();
+$("#zona").select2();
+$("#area").select2();
+$("#disp").select2();
+$("#resp").select2();</script>
 
 <script>
 
 $(document).ready(function(){
 <?php if(isset($_SESSION['miss'][3]) && $_SESSION['miss'][3]==-1) {?>
-	$('#f_cli').empty().append('<select id="cli" name="cli" class="selectpicker"><option value="0" selected="selected">Seleccione un Cliente</option><!-- LLENADO POR JAVASCRIPT -->   </select>');
+	$('#f_cli').empty().append('<select id="cli" name="cli" class="selectpicker"><option value="0" selected="selected">Seleccione un Cliente</option><!-- LLENADO POR JAVASCRIPT --></select>');
 	cargar_clientes();
 	$("#cli").select2();
 	$("#cli").change(function(){ 
-		dependencia_tipo();
-		dependencia_unid(); 
-		dependencia_resp();
+		dependencia_zonas();
+		dependencia_areas(); 
+		dependencia_dispositivos();
+		dependencia_confunid();
+		dependencia_personal();
 	});
 <?php } else { 
 $rs = pg_query($link,"select rif, razon_social from clientes where id_cliente = ".$_SESSION['miss'][3]); $rs = pg_fetch_array($rs); ?>
 	$('#f_cli').empty().append('<input id="cli" name="cli" type="hidden" value="<?php echo $_SESSION['miss'][3];?>" readonly="readonly"/><input id="dcli" name="dcli" type="text" placeholder="Cliente Actual" class="form-control" value="<?php echo $rs[0]." ".$rs[1];?>" readonly="readonly" />');
-	dependencia_tipo();
-	dependencia_unid(); 
-	dependencia_resp();
+	dependencia_zonas();
+	dependencia_areas();
+	dependencia_dispositivos();
+	dependencia_confunid();
+	dependencia_personal();
 <?php } ?>
-	$("#tipo").attr("disabled",true);
-	$("#unid").attr("disabled",true);
-	$("#res").attr("disabled",true);
+	$("#zona").attr("disabled",true);
+	$("#area").attr("disabled",true);
+	$("#disp").attr("disabled",true);
+	$("#conf").attr("disabled",true);
+	$("#resp").attr("disabled",true);
 });
-
 function cargar_clientes(){
 	$.get("../combox/cargar_clientes.php", function(resultado){
 		if(resultado == false){ alert("Error"); }
@@ -478,91 +467,103 @@ function cargar_clientes(){
 		}
 	});	
 }
-
-function dependencia_unid(){
+function dependencia_zonas(){
 	var code = $("#cli").val();
-	$.get("../combox/dependencia_unidades3.php", { code: code },
+	$.get("../combox/dependencia_zonas.php", { code: code },
 		function(resultado){
 			if(resultado == false){ alert("Error"); }
 			else {
-				$("#unid").attr("disabled",false);
-				document.getElementById("unid").options.length=0;
-				$('#unid').append(resultado);
-				document.getElementById('unid').value = '<?php echo $unid;?>';
+				$("#zona").attr("disabled",false);
+				document.getElementById("zona").options.length=0;
+				$('#zona').append(resultado);
+				document.getElementById('zona').value = '<?php echo $zona;?>';		
 			}
 		}
 	);
 }
-function dependencia_resp(){
+function dependencia_areas(){
+	var code = $("#cli").val();
+	$.get("../combox/dependencia_areas.php", { code: code },
+		function(resultado){
+			if(resultado == false){ alert("Error"); }
+			else {
+				$("#area").attr("disabled",false);
+				document.getElementById("area").options.length=0;
+				$('#area').append(resultado);
+				document.getElementById('area').value = '<?php echo $area;?>';			
+			}
+		}
+	);
+}
+function dependencia_dispositivos(){
+	var code = $("#cli").val();
+	$.get("../combox/dependencia_dispositivos.php", { code: code },
+		function(resultado){
+			if(resultado == false){ alert("Error"); }
+			else {
+				$("#disp").attr("disabled",false);
+				document.getElementById("disp").options.length=0;
+				$('#disp').append(resultado);
+				document.getElementById('disp').value = '<?php echo $disp;?>';		
+			}
+		}
+	);
+}
+function dependencia_confunid(){
+	var code = $("#cli").val();
+	$.get("../combox/dependencia_confunid.php", { code: code },
+		function(resultado){
+			if(resultado == false){ alert("Error"); }
+			else {
+				$("#conf").attr("disabled",false);
+				document.getElementById("conf").options.length=0;
+				$('#conf').append(resultado);
+				document.getElementById('conf').value = '<?php echo $conf;?>';		
+			}
+		}
+	);
+}
+
+function dependencia_personal(){
 	var code = $("#cli").val();
 	$.get("../combox/dependencia_personal.php", { code: code },
 		function(resultado){
 			if(resultado == false){ alert("Error"); }
 			else {
-				$("#res").attr("disabled",false);
-				document.getElementById("res").options.length=0;
-				$('#res').append(resultado);	
-				document.getElementById('res').value = '<?php echo $res;?>';		
+				$("#resp").attr("disabled",false);
+				document.getElementById("resp").options.length=0;
+				$('#resp').append(resultado);
+				document.getElementById('resp').value = '<?php echo $resp;?>';	
 			}
 		}
 	);
 }
-function dependencia_tipo(){
-	var code = $("#cli").val();
-	$.get("../combox/dependencia_tipo_requerimientos.php", { code: code },
-		function(resultado){
-			if(resultado == false){ alert("Error"); }
-			else {
-				$("#tipo").attr("disabled",false);
-				document.getElementById("tipo").options.length=0;
-				$('#tipo').append(resultado);	
-				document.getElementById('tipo').value = '<?php echo $tipo;?>';		
-			}
-		}
-	);
-}
-	dependencia_tipo();
 </script>
 
-<script src="../Legend/admin/assets/icheck/js/jquery.icheck.min.js"></script>
-<script> 
-function icheck() {
-     $('.colors li').click(function () {
-         var self = $(this);
-
-         if (!self.hasClass('active')) {
-             self.siblings().removeClass('active');
-			 
-             var skin = self.closest('.skin'),
-                 color = self.attr('class') ? '-' + self.attr('class') : '',
-                 checkbox = skin.data('icheckbox'),
-                 checkbox_default = 'icheckbox_minimal';
-
-             if (skin.hasClass('skin-square')) {
-                 checkbox_default = 'icheckbox_square';
-                 checkbox == undefined && (checkbox = 'icheckbox_square');
-             };
-
-             checkbox == undefined && (checkbox = checkbox_default);
-
-             skin.find('input, .skin-states .state').each(function () {
-                 var element = $(this).hasClass('state') ? $(this) : $(this).parent(),
-                     element_class = element.attr('class').replace(checkbox, checkbox_default + color);
-
-                 element.attr('class', element_class);
-             });
-
-             skin.data('icheckbox', checkbox_default + color);
-         
-             self.addClass('active');
-         };
-     });
-     $('.skin-square input').iCheck({
-         checkboxClass: 'icheckbox_square-blue',
-         
-         increaseArea: '20%'
-     });
- }icheck();
+<script>
+var label1="", label2="", label3="", label4="";
+function CargarConfUnid(){ 
+	var id = document.getElementById('conf').value;
+	if(id=='0'){ 
+		document.getElementById('eti1').innerHTML="";
+		document.getElementById('eti2').innerHTML="";
+		document.getElementById('eti3').innerHTML="";
+		document.getElementById('eti4').innerHTML="";
+		document.getElementById('eti5').innerHTML="";
+	} else { 
+		id = id.split(":::");
+		label1 = id[1];
+		label2 = id[2];
+		label3 = id[3];
+		label4 = id[4];
+		label5 = id[5];
+		document.getElementById('eti1').innerHTML=id[1];
+		document.getElementById('eti2').innerHTML=id[2];
+		document.getElementById('eti3').innerHTML=id[3];
+		document.getElementById('eti4').innerHTML=id[4];
+		document.getElementById('eti5').innerHTML=id[5];
+	}
+}
 </script>
 
 <script src="../Legend/admin/assets/fuelux/js/all.min.js"></script>
@@ -604,39 +605,21 @@ function icheck() {
          $('[data-target=#step2]').trigger("click");
      });
  }
-fueluxwizard();
+fueluxwizard();</script>
 
-function CargarRequisitos(cmd){ 	
-	var id = document.getElementById('tipo').value; 
-	$.get("requisitos.php?id="+id+cmd, function(resultado){ 
-		if(resultado == false){ alert("Error"); 
-		} else { 
-			$("#step2").empty();
-			$('#step2').append(resultado); 
-			icheck();
-		} 
+<script src="../jquery/development-bundle/ui/jquery.ui.core.js"></script>
+<script src="../jquery/development-bundle/ui/jquery.ui.widget.js"></script>
+<script src="../jquery/development-bundle/ui/jquery.ui.datepicker.js"></script>
+<link rel="stylesheet" href="../jquery/development-bundle/themes/custom-theme/jquery.ui.datepicker.css"/>
+<script> 
+	$( "#fi" ).datepicker({ 
+		defaultDate: "0",
+		minDate: "0",
+		maxDate: "+36M +1D"
 	});
-}
-
-function CargarDocs(){ 
-	var id = document.getElementById('tipo').value;
-	$.get("docs.php?id="+id, function(resultado){ 
-		id = Number(resultado);
-		items = 0;
-		$("#fotos").empty();
-		$("#dess").empty();
-		for(i=0; i<id; i++){ 
-			agregar_doc();
-		}
-	});
-}
 </script>
 
-<?php if(isset($recargar) && $recargar==true){ 
-	echo "<script>CargarRequisitos('');</script>";
-}?>
-
-<script src="../Legend/admin/assets/bootstrapfilestyle/js/bootstrap-filestyle2.js"></script>
+<script src="../Legend/admin/assets/bootstrapfilestyle/js/bootstrap-filestyle.js"></script>
 <!-- InstanceEndEditable -->
 
 <?php 
